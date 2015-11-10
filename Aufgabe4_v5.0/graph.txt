@@ -1,0 +1,50 @@
+digraph OpenTracker {
+{rank=same; "ConsoleConfig(1CFA6958): 0" "ARToolKitPlusConfig(1CFA6A00): 0" "SpaceDeviceConfig(1CFA6B30): 0" ;}
+{rank=same; "EventTransform1CFA7390: 1" ;}
+{rank=same; "ARToolKitPlusSingleMarkerSource1CFA7490: 0" ;}
+{rank=same; "UnitySink1CFA72A8: 2" ;}
+{rank=same; "ConsoleSink(1CFA71B0): 3" ;}
+{rank=same; "EventTransform1F88B858: 1" ;}
+{rank=same; "ARToolKitPlusSingleMarkerSource1F88B958: 0" ;}
+{rank=same; "UnitySink1CFA76A8: 2" ;}
+{rank=same; "ConsoleSink(1CFA75B0): 3" ;}
+{rank=same; "EventTransform1F88C460: 1" ;}
+{rank=same; "ARToolKitPlusSingleMarkerSource1F88C968: 0" ;}
+{rank=same; "UnitySink1F88C378: 2" ;}
+{rank=same; "ConsoleSink(1F88C280): 3" ;}
+{rank=same; "EventTransform1F88CC68: 1" ;}
+{rank=same; "ARToolKitPlusSingleMarkerSource1F88CD68: 0" ;}
+{rank=same; "UnitySink1F88CB80: 2" ;}
+{rank=same; "ConsoleSink(1F88CA88): 3" ;}
+{rank=same; "EventTransform1CFAF788: 1" ;}
+{rank=same; "ARToolKitPlusSingleMarkerSource1CFAF888: 0" ;}
+{rank=same; "UnitySink1CFAF6A0: 2" ;}
+{rank=same; "ConsoleSink(1F88CE88): 3" ;}
+{rank=same; "EventTransform1CFAFF90: 1" ;}
+{rank=same; "ARToolKitPlusSingleMarkerSource1CFB0090: 0" ;}
+{rank=same; "UnitySink1CFAFAA0: 2" ;}
+{rank=same; "ConsoleSink(1CFAF9A8): 3" ;}
+{rank=same; "EventTransform1CFB0390: 0" ;}
+{rank=same; "UnitySink1CFB02A8: 1" ;}
+{rank=same; "ConsoleSink(1CFB01B0): 2" ;}
+"EventTransform1CFA7390: 1" -> "UnitySink1CFA72A8: 2";
+"ARToolKitPlusSingleMarkerSource1CFA7490: 0" -> "EventTransform1CFA7390: 1";
+"UnitySink1CFA72A8: 2" -> "ConsoleSink1CFA71B0: 3";
+"EventTransform1F88B858: 1" -> "UnitySink1CFA76A8: 2";
+"ARToolKitPlusSingleMarkerSource1F88B958: 0" -> "EventTransform1F88B858: 1";
+"UnitySink1CFA76A8: 2" -> "ConsoleSink1CFA75B0: 3";
+"EventTransform1F88C460: 1" -> "UnitySink1F88C378: 2";
+"ARToolKitPlusSingleMarkerSource1F88C968: 0" -> "EventTransform1F88C460: 1";
+"UnitySink1F88C378: 2" -> "ConsoleSink1F88C280: 3";
+"EventTransform1F88CC68: 1" -> "UnitySink1F88CB80: 2";
+"ARToolKitPlusSingleMarkerSource1F88CD68: 0" -> "EventTransform1F88CC68: 1";
+"UnitySink1F88CB80: 2" -> "ConsoleSink1F88CA88: 3";
+"EventTransform1CFAF788: 1" -> "UnitySink1CFAF6A0: 2";
+"ARToolKitPlusSingleMarkerSource1CFAF888: 0" -> "EventTransform1CFAF788: 1";
+"UnitySink1CFAF6A0: 2" -> "ConsoleSink1F88CE88: 3";
+"EventTransform1CFAFF90: 1" -> "UnitySink1CFAFAA0: 2";
+"ARToolKitPlusSingleMarkerSource1CFB0090: 0" -> "EventTransform1CFAFF90: 1";
+"UnitySink1CFAFAA0: 2" -> "ConsoleSink1CFAF9A8: 3";
+"EventTransform1CFB0390: 0" -> "UnitySink1CFB02A8: 1";
+"UnitySink1CFB02A8: 1" -> "ConsoleSink1CFB01B0: 2";
+}
