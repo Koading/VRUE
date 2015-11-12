@@ -42,7 +42,7 @@ public class NetworkGUI : MonoBehaviour {
 	 * store player name
     ----------------------------------------------------------------- */
 
-    string playerName;
+    public string playerName = "";
 
     // ------------------ VRUE Tasks END ----------------------------
 
@@ -130,9 +130,10 @@ public class NetworkGUI : MonoBehaviour {
     void InformClientName(string playerName)
     {
 
-        Debug.Log("InformClientName being called");
-        //this.playerName = playerName;
-        GUILayout.Label("Player name: " + this.playerName);
+        Debug.Log("InformClientName being called from " + playerName);
+
+        this.playerName = playerName;
+        //GUILayout.Label("Player name: " + this.playerName); 
 
     }
     // ------------------ VRUE Tasks END ----------------------------

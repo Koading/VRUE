@@ -78,7 +78,7 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.8/Standalone/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityInterface">
- <HintPath>C:/Users/phil/Dropbox/Dropbox/Virtual and Augmented Reality UE/Aufgabe4_v5.0/Assets/UnityInterface.dll</HintPath>
+ <HintPath>C:/Users/phil/Dropbox/Dropbox/Virtual and Augmented Reality UE/git/Aufgabe4_v5.0/Assets/UnityInterface.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

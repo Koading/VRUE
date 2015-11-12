@@ -81,17 +81,23 @@ public class UserManager : ScriptableObject {
         for(int id = 1; id < 32; id++)
         {
             playerName = "player"+id;
-            if(!playerMap.ContainsKey(playerName))
+
+            Debug.Log("Checking to add player" + id);
+
+            if(!playerMap.ContainsKey(playerName) && !playerMap.ContainsValue(player))
             {
                 playerMap.Add(playerName, player);
+                if (isClient) { 
+                    NetworkView nv = GameObject.Find("GUIObj").GetComponent<NetworkView>();
+                    object[] arguments = new object[1];
+                    arguments[0] = playerName;
 
-                NetworkView nv = GameObject.Find("GUIObj").GetComponent<NetworkView>();
-                object[] arguments = new object[1];
-                arguments[0] = playerName;
-
-                Debug.Log("Calling InformClientName RPC");
-                nv.RPC("InformClientName", player, arguments);
+                    Debug.Log("Calling InformClientName RPC");
+                    nv.RPC("InformClientName", player, arguments);
+                }
+                break;
             }
+
         }
 
 
