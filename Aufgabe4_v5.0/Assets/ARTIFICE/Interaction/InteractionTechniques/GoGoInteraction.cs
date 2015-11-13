@@ -63,9 +63,9 @@ public class GoGoInteraction : ObjectSelectionBase
     //change to void OnEnable()
     void Start()
     {
-        //marker = GameObject.Find("Marker1");
+        marker = GameObject.Find("Marker1");
         trackMarker = marker.GetComponent<TrackMarker>();
-        //markerVis = GameObject.Find("MarkerVisualisation");
+
         trackerObject = GameObject.Find("TrackerObject");
         interactionObject = GameObject.Find("InteractionObject");
 

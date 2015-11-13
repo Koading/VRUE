@@ -43,10 +43,10 @@ public class HomerInteraction : ObjectSelectionBase
 
 
     public GameObject trackerObject;
-    public GameObject interactionObject;
+    //public GameObject interactionObject;
     public GameObject target;
     public GameObject marker;
-    public GameObject markerVis;
+    //public GameObject markerVis;
 
     GameObject torso;
 
@@ -67,7 +67,10 @@ public class HomerInteraction : ObjectSelectionBase
     void Start()
     {
         trackerObject = GameObject.Find("TrackerObject");
-        interactionObject = GameObject.Find("InteractionObject");
+        //interactionObject = GameObject.Find("InteractionObject");
+
+        marker = GameObject.Find("Marker1");
+        trackMarker = marker.GetComponent<TrackMarker>();
 
         torso = GameObject.Find("InteractionOrigin");
 
@@ -260,7 +263,7 @@ public class HomerInteraction : ObjectSelectionBase
     void AddObjectCollider(Collider c)
     {
 
-        if (isOwnerCallback())
+        if (!isOwnerCallback())
             return;
 
         GameObject collidee = c.gameObject;
@@ -290,7 +293,7 @@ public class HomerInteraction : ObjectSelectionBase
 
     void RemoveObjectCollider()
     {
-        if (isOwnerCallback())
+        if (!isOwnerCallback())
             return;
 
         ArrayList keys = new ArrayList(this.collidees.Keys);
