@@ -46,55 +46,36 @@ public class GoGoInteraction : ObjectSelectionBase
 
     public GameObject trackerObject;
     public GameObject interactionObject;
-    public GameObject target;
     public GameObject marker;
-    public GameObject markerVis;
 
     GameObject virtualHand;
     GameObject physicalHand;
 
     TrackMarker trackMarker;
 
-    GameObject virtualCamera;
-    GameObject trackingCamera;
-
-    public float thresholdDistance; // D
-    public float coefficient;       // k
+    public float thresholdDistance = 5.0f; // D
+    public float coefficient = 0.5f;       // k
     //GOGO: when distance > distancethreshold : position = distance + k * (distance - threshold) ^ 2
-
     //gogo tldr: extend hand exponentially if outside radius r
-
-    Vector3 extension;
 
     GameObject torso;
 
     //change to void OnEnable()
     void Start()
     {
-        marker = GameObject.Find("Marker1");
+        //marker = GameObject.Find("Marker1");
         trackMarker = marker.GetComponent<TrackMarker>();
-        markerVis = GameObject.Find("MarkerVisualisation");
+        //markerVis = GameObject.Find("MarkerVisualisation");
         trackerObject = GameObject.Find("TrackerObject");
         interactionObject = GameObject.Find("InteractionObject");
 
         torso = GameObject.Find("InteractionOrigin");
 
-        virtualCamera = GameObject.Find("VirtualCamera");
-        trackingCamera = GameObject.Find("TrackingCamera");
-
-
-
         virtualHand = this.gameObject;
-        physicalHand = GameObject.Find("PhysicalHand");
-        target = GameObject.Find("Target");
+        //physicalHand = GameObject.Find("PhysicalHand");
+        physicalHand = trackerObject;
     }
 
-    /*
-    protected override void UpdateSelect()
-    {
-
-    }
-    */
     //void Update()
     protected override void UpdateSelect()
     {

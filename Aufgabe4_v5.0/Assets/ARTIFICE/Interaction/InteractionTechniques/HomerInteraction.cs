@@ -66,18 +66,15 @@ public class HomerInteraction : ObjectSelectionBase
 
     void Start()
     {
-        marker = GameObject.Find("Marker1");
-        trackMarker = marker.GetComponent<TrackMarker>();
-        markerVis = GameObject.Find("MarkerVisualisation");
         trackerObject = GameObject.Find("TrackerObject");
         interactionObject = GameObject.Find("InteractionObject");
 
         torso = GameObject.Find("InteractionOrigin");
 
         virtualHand = this.gameObject;
-        physicalHand = GameObject.Find("PhysicalHand");
+        physicalHand = trackerObject;//GameObject.Find("PhysicalHand");
 
-        target = GameObject.Find("Target");
+        //target = GameObject.Find("Target");
 
         multiSelect = true;
         lastFrameCollissionDetected = false;
