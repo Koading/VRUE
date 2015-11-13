@@ -27,7 +27,6 @@
 using UnityEngine;
 using System.Collections;
 
-
 /// <summary>
 /// Class to select and manipulate scene objects with HOMER interaction technique (IT). 
 /// 
@@ -35,284 +34,173 @@ using System.Collections;
 /// </summary>
 public class HomerInteraction : ObjectSelectionBase
 {
-    /* ------------------ VRUE Tasks START -------------------
-    * 	Implement Homer interaction technique
-    ----------------------------------------------------------------- */
-
-    LineRenderer rayCastVis;
-
-
-    public GameObject trackerObject;
-    //public GameObject interactionObject;
-    public GameObject target;
-    public GameObject marker;
-    //public GameObject markerVis;
-
-    GameObject torso;
-
-    GameObject virtualHand;
-    GameObject physicalHand;
-
-    TrackMarker trackMarker;
-
-    public bool multiSelect;
-    bool lastFrameCollissionDetected;
-
-
-    GameObject selectedObject;
-    Vector3 o;
-    GameObject raycastOrigin;
-
-
-    void Start()
-    {
-        trackerObject = GameObject.Find("TrackerObject");
-        //interactionObject = GameObject.Find("InteractionObject");
-
-        marker = GameObject.Find("Marker1");
-        trackMarker = marker.GetComponent<TrackMarker>();
-
-        torso = GameObject.Find("InteractionOrigin");
-
-        virtualHand = this.gameObject;
-        physicalHand = trackerObject;//GameObject.Find("PhysicalHand");
-
-        //target = GameObject.Find("Target");
-
-        multiSelect = true;
-        lastFrameCollissionDetected = false;
-
-        //raycastOrigin = torso.transform.position;
-        raycastOrigin = physicalHand;
-    }
-
-
-    protected override void UpdateSelect()
-    {
-        if (trackerObject)
-        {
-            if (trackMarker.isTracked())
-            {
-                trackerObject.transform.parent.GetComponent<TrackBase>().setVisability(gameObject, true);
-
-                //Update transform of the selector object (virtual hand)
-                this.transform.rotation = trackerObject.transform.rotation;
-
-                if (!rayCastVis)
-                {
-                    //code works here
-                    rayCastVis = virtualHand.AddComponent<LineRenderer>();//this.gameObject.AddComponent<LineRenderer>();
-
-                    rayCastVis.SetWidth(0.2f, 0.2f);
-
-                    rayCastVis.SetColors(Color.green, Color.green);
-                }
-
-                if (rayCastVis)
-                {
-                    //Vector3 dir = physicalHand.transform.position + physicalHand.transform.localPosition;
-
-                    //incidently returns a vector size 1 pointing forward
-                    //250 is arbitrarily chosen, as it looks good enough
-                    Vector3 dir = physicalHand.transform.forward * 250;
-
-                    //rayCastVis.SetPosition(0, raycastOrigin);
-                    //rayCastVis.SetPosition(1, torso.transform.forward * 250);
-
-                    rayCastVis.SetPosition(0, raycastOrigin.transform.position);
-                    rayCastVis.SetPosition(1, dir);
-
-                    //rayCastVis.collider.enabled = true;
-                    if (!this.RayCast(dir))
-                    {
-                        RemoveObjectCollider();
-                    }
-
-                }
-
-                if (selected)
-                {
-                    Debug.Log("Selected");
-
-                    //set virtual hand to object:
-                    /*
-                    Vector3 t = torso.transform.position;
-                    Vector3 h = physicalHand.transform.position;
-
-                    float dist_h = Vector3.Distance(h, t);
-
-                    float dist_o = Vector3.Distance(o, t);
-
-                    Vector3 hcurr = physicalHand.transform.position;
-                    float dist_hcurr = Vector3.Distance(hcurr, t);
-
-                    float dist_vh = dist_hcurr * (dist_o / dist_h);
-                    Vector3 thcurr = (hcurr - t).normalized;
-
-                    Vector3 vh = t + dist_vh * (thcurr);
-
-                    this.transform.position = vh;//trackerObject.transform.position; //t + dvh + (thcurr)
-                    */
-
-                    //this.transform.position = o;
-                    //this.transformInter(this.transform.position, this.transform.rotation);
-                    //this.transform.position = selectedObject.transform.position;
-                    this.transform.position = trackerObject.transform.position;
-                    this.transformInter(this.physicalHand.transform.position, this.transform.rotation);
-
-
-                }
-                else
-                {
-                    this.transform.position = trackerObject.transform.position;
-                }
-            }
-
-            else
-            {
-                trackerObject.transform.parent.GetComponent<TrackBase>().setVisability(gameObject, false);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Debug.Log("Change mode");
-            multiSelect = !multiSelect;
-
-            Debug.Log("MultiSelect" + multiSelect);
-        }
-    }
-
-    bool RayCast(Vector3 dir)
-    {
-        bool hasHit = false;
-        //if(Physics.Raycast(torso.transform.position, dir, out hit, float.PositiveInfinity))
-        if (!multiSelect)
-        {
-            RaycastHit hit;
-            //hasHit = Physics.Raycast(physicalHand.transform.position, dir, out hit, float.PositiveInfinity);
-            hasHit = Physics.Raycast(raycastOrigin.transform.position, dir, out hit, float.PositiveInfinity);
-            if (hasHit)
-            {
-                lastFrameCollissionDetected = true;
-
-                AddObjectCollider(hit.collider);
-                //hit.collider.renderer.material.SetColor("_Color", Color.blue);
-            }
-            else
-            {
-                //RemoveObjectCollider();
-            }
-        }
-        else if (multiSelect)
-        {
-            RaycastHit[] hits;
-            //hits = (Physics.RaycastAll(physicalHand.transform.position, dir, float.PositiveInfinity));
-            hits = (Physics.RaycastAll(raycastOrigin.transform.position, dir, float.PositiveInfinity));
-            if (hits.Length > 0)
-            {
-                hasHit = true;
-
-                foreach (RaycastHit hit in hits)
-                {
-                    lastFrameCollissionDetected = true;
-
-                    AddObjectCollider(hit.collider);
-                }
-            }
-        }
-
-        return hasHit;
-    }
-
-    void OnEnable()
-    {
-
-        //this code does not work in combination on being activated from ITSelectionGUI. Linerenderer component returns null
-        //it works when i activate it manually (as in check the enabled box in inspector on runtime) but not when it is activated in the ITSelectionGUI script
-        //i copied the exact! same! code to UpdateSelect. 
-        //
-        //
-        /*
-        
-        Debug.Log("Call OnEnable");
-        Debug.Log(this.gameObject.GetType());
-
-        rayCastVis = virtualHand.AddComponent<LineRenderer>();//this.gameObject.AddComponent<LineRenderer>();
-
-        Debug.Log(rayCastVis);
-
-        rayCastVis.SetWidth(0.2f, 0.2f);
-         
-        rayCastVis.SetColors(Color.green, Color.green);
-        */
-    }
-
-    void OnDisable()
-    {
-        //Debug.Log("Destroyed raycast");
-        if (rayCastVis)
-        {
-            rayCastVis.enabled = false;
-
-            GameObject.Destroy(rayCastVis);
-            rayCastVis = null;
-        }
-    }
-
-    void AddObjectCollider(Collider c)
-    {
-
-        if (!isOwnerCallback())
-            return;
-
-        GameObject collidee = c.gameObject;
-
-        //single mode
-        if (!multiSelect
-            && !collidees.Contains(collidee.GetInstanceID()))
-        {
-            //if last hit already has an item and a different one is selected, remove old item(s) and add new one
-            RemoveObjectCollider();
-
-        }
-
-        if (collidee != null
-            && hasObjectController(collidee)
-            && !collidees.Contains(collidee.GetInstanceID()))
-        {
-            selectedObject = collidee;
-            o = collidee.transform.position;
-
-            collidees.Add(collidee.GetInstanceID(), collidee);
-
-            // change color so user knows of intersection end
-            collidee.renderer.material.SetColor("_Color", Color.blue);
-        }
-    }
-
-    void RemoveObjectCollider()
-    {
-        if (!isOwnerCallback())
-            return;
-
-        ArrayList keys = new ArrayList(this.collidees.Keys);
-
-        foreach (int c in keys)
-        {
-            GameObject collidee = this.collidees[c] as GameObject;
-            //GameObject go = collidee.gameObject;
-
-            if (hasObjectController(collidee))
-            {
-                Debug.Log("unselect Object");
-                collidees.Remove(c);
-
-                // change color so user knows of intersection end
-                collidee.renderer.material.SetColor("_Color", Color.white);
-            }
-        }
-    }
-
-    // ------------------ VRUE Tasks END ----------------------------
+	/* ------------------ VRUE Tasks START -------------------
+	* 	Implement Homer interaction technique
+	----------------------------------------------------------------- */
+		
+	private GameObject tracker = null;
+	private GameObject physicalHand = null;
+	private GameObject torso = null;
+	private float dh;
+	private float d0;
+	private LineRenderer lineRenderer;
+	private bool multiple = true;
+	private bool keyDownAlready = false;
+
+	/// <summary>
+	/// </summary>
+	public void Start()
+	{
+		tracker = GameObject.Find("TrackerObject");
+		torso = GameObject.Find ("InteractionOrigin");
+		physicalHand = GameObject.Find ("PhysicalHand");
+
+		// remove this as soon as GUI is ready
+		lineRenderer = this.gameObject.AddComponent<LineRenderer> ();
+		
+		lineRenderer.SetWidth (0.02f, 0.02f);
+
+		//////////////////////
+
+		Debug.Log("Start Homer");
+	}
+	
+	/// <summary>
+	/// Implementation of concrete IT selection behaviour. 
+	/// </summary>
+	protected override void UpdateSelect()
+	{
+
+
+		if(tracker)
+		{
+			// INTERACTION TECHNIQUE THINGS ------------------------------------------------
+			if (tracker.transform.parent.GetComponent<TrackBase>().isTracked())
+			{
+				if(this.enabled) {
+					Debug.Log(multiple);
+					if (!keyDownAlready && Input.GetKeyDown (KeyCode.M)) {
+						keyDownAlready = true;
+						multiple = !multiple;
+					}
+					if (Input.GetKeyUp (KeyCode.M)) {
+						keyDownAlready = false;
+					}
+
+					// show virtual hand -> physical hand is autmatically rendert due to tracking state
+					tracker.transform.parent.GetComponent<TrackBase>().setVisability(gameObject, true);
+					this.transform.rotation = tracker.transform.rotation;					
+
+
+					if(lineRenderer && !selected) {
+						//Update transform of the selector object (virtual hand)
+						this.transform.position = tracker.transform.position;
+						lineRenderer.SetPosition (0, physicalHand.transform.position);
+						lineRenderer.SetPosition (1, (physicalHand.transform.position - torso.transform.position ).normalized * 99999 + physicalHand.transform.position);
+						ArrayList removableCollidees = new ArrayList();							
+
+						foreach(GameObject collidee in collidees.Values) {
+							removableCollidees.Add(collidee);
+						}
+						
+						foreach(GameObject collidee in removableCollidees) {
+							collidees.Remove(collidee.GetInstanceID());
+							
+							// change color so user knows of intersection end
+							collidee.renderer.material.SetColor("_Color", Color.white);
+						}
+						
+						if(multiple) {
+
+							RaycastHit[] hits = Physics.RaycastAll(new Ray(physicalHand.transform.position, (physicalHand.transform.position - torso.transform.position ).normalized));
+							if(hits.Length > 0 ) {
+								for (int i = 0; i < hits.Length; i++) {
+									RaycastHit hit = hits[i];
+									GameObject collidee = hit.collider.gameObject;
+
+									if (hasObjectController(collidee) && 
+									    !collidees.Contains(collidee.GetInstanceID()))
+									{
+										collidees.Add(collidee.GetInstanceID(), collidee);
+										//Debug.Log(collidee.GetInstanceID());
+										
+										// change color so user knows of intersection
+										collidee.renderer.material.SetColor("_Color", Color.blue);
+									}
+								}
+								Vector3 positionOfColliddeeObject = new Vector3(0,0,0);
+								
+								foreach(GameObject collidee in collidees.Values) {
+									positionOfColliddeeObject += collidee.transform.position;
+								}
+
+								Debug.Log("Number of elements in collidee");
+								
+								positionOfColliddeeObject = positionOfColliddeeObject / collidees.Count;
+								dh = (physicalHand.transform.position - torso.transform.position).magnitude;
+								d0 = (positionOfColliddeeObject - torso.transform.position).magnitude;
+							}
+						} else  {
+							RaycastHit hit;
+							if(Physics.Raycast(new Ray(physicalHand.transform.position, (physicalHand.transform.position - torso.transform.position ).normalized), out hit)) {
+								GameObject collidee = hit.collider.gameObject;
+								
+								if (hasObjectController(collidee) && 
+								    !collidees.Contains(collidee.GetInstanceID())) {
+									collidees.Add(collidee.GetInstanceID(), collidee);
+									//Debug.Log(collidee.GetInstanceID());
+									
+									// change color so user knows of intersection
+									collidee.renderer.material.SetColor("_Color", Color.blue);
+								}
+
+								dh = (tracker.transform.position - torso.transform.position).magnitude;
+								d0 = (collidee.transform.position - torso.transform.position).magnitude;
+							} 
+						}
+					}
+
+					
+					// Transform (translate and rotate) selected object depending on of virtual hand's transformation
+					if (selected)
+					{
+						lineRenderer.SetPosition (0, tracker.transform.position);
+						lineRenderer.SetPosition (1, tracker.transform.position);
+						float dhcurr = (physicalHand.transform.position - torso.transform.position).magnitude;
+						float dvh = dhcurr *(d0 / dh);
+						this.transform.position = torso.transform.position + dvh * (physicalHand.transform.position - torso.transform.position).normalized;
+
+						Debug.Log("New Hand Position: " + this.transform.position);
+
+						this.transformInter(this.transform.position, this.transform.rotation);
+					}
+				}
+			}else 
+			{
+				// make virtual hand invisible -> physical hand is autmatically rendert due to tracking state
+				tracker.transform.parent.GetComponent<TrackBase>().setVisability(gameObject, false);
+			}
+		}
+		else
+		{
+			Debug.Log("No GameObject with name - TrackerObject - found in scene");
+		}
+	}
+	
+	
+	public void onEnable() {
+		lineRenderer = this.gameObject.AddComponent<LineRenderer> ();
+		
+		lineRenderer.SetWidth (0.02f, 0.02f);
+	
+	}
+
+	public void onDisabled() {
+		Destroy (lineRenderer);
+	}
+
+
+
+
+	// ------------------ VRUE Tasks END ----------------------------
 }
