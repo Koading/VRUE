@@ -44,6 +44,7 @@ public class ExclusiveAccessObjectController : NetworkObjectController
     /// </summary>
     /// 
     
+
 	/* ------------------ VRUE Tasks START   -------------------
 	 *	- Add a NetworkPlayer member to store the player that has the object currently selected
 	 *	- The static member above should be used for initialization for the new member. 
@@ -66,6 +67,10 @@ public class ExclusiveAccessObjectController : NetworkObjectController
     [RPC]
     public override bool controlSelectedObjects(bool select, NetworkViewID viewID, NetworkMessageInfo info)
     {
+        Debug.Log("controlSelectedObjects");
+
+
+
         if (isObjectAccessGranted(info.sender))
         {
             if (base.controlSelectedObjects(select,viewID,info))
@@ -74,7 +79,7 @@ public class ExclusiveAccessObjectController : NetworkObjectController
 				 *	- set the current NetworkPlayer to the player calling the RPC-method or 
                  *	the default NetworkPlayer depending on "select"
                 ----------------------------------------------------------------- */
-                
+
                 //return true;//replace me
                 if (select)
                     currentPlayer = info.sender;
@@ -113,13 +118,13 @@ public class ExclusiveAccessObjectController : NetworkObjectController
     /// <returns>true if it is the access granted, false otherwise</returns>
     protected override bool isObjectAccessGranted(NetworkPlayer player)
     {
+        
         if(base.isObjectAccessGranted(player))
         {
 			/* ------------------ VRUE Tasks START   -------------------
 			 * 	- return true if the player is the one that has currently selected
 			 * the object or the object is not selected.
 			----------------------------------------------------------------- */
-
 //return true; //replace me
             return currentPlayer == defaultAccessPlayer || currentPlayer== player;
 

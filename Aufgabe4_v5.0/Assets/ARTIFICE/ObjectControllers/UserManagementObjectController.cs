@@ -46,16 +46,16 @@ public class UserManagementObjectController : ExclusiveAccessObjectController
     /// <returns>true if it is the access granted, false otherwise</returns>
     protected override bool isObjectAccessGranted(NetworkPlayer player)
     {
+
+        Debug.Log("Is Access Granted?");
         if(base.isObjectAccessGranted(player))
         {
+            Debug.Log("Access Granted: " + (accessGrantedPlayer == player));
 			/* ------------------ VRUE Tasks START  -------------------
 			 * 	- find out if the NetworkPlayer is the owner of the object
 			----------------------------------------------------------------- */
 //return false; //replace me
-
-
-
-            return isAccessingObject(player);
+            return accessGrantedPlayer == player;//isAccessingObject(player);
 
 
 
@@ -78,6 +78,9 @@ public class UserManagementObjectController : ExclusiveAccessObjectController
     {
         UserManager.instance.AddNewPlayer(player,true);
         accessGrantedPlayer = UserManager.instance.getNetworkPlayer(accessGrantedName);
+        Debug.Log(accessGrantedName + " " + this.gameObject.name);
+
+        Debug.Log(accessGrantedPlayer);
     }
 	/*
 	void OnServerInitialized(NetworkPlayer player) 
@@ -108,6 +111,7 @@ public class UserManagementObjectController : ExclusiveAccessObjectController
     /// <returns>True if the object is assigned to the player, false otherwise</returns>
     bool isAccessGrantedPlayer(NetworkPlayer player)
     {
+        Debug.Log("isAccessGrantedPlayer " + player);
         if (player == accessGrantedPlayer)
         {
             return true;
@@ -118,5 +122,6 @@ public class UserManagementObjectController : ExclusiveAccessObjectController
             return false;
         }
     }
-    
+
+
 }

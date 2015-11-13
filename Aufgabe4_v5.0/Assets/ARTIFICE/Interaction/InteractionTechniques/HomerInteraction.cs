@@ -53,7 +53,7 @@ public class HomerInteraction : ObjectSelectionBase
 	{
 		tracker = GameObject.Find("TrackerObject");
 		torso = GameObject.Find ("InteractionOrigin");
-		physicalHand = GameObject.Find ("PhysicalHand");
+        physicalHand = tracker;//GameObject.Find ("PhysicalHand");
 
 		// remove this as soon as GUI is ready
 		lineRenderer = this.gameObject.AddComponent<LineRenderer> ();
@@ -104,10 +104,12 @@ public class HomerInteraction : ObjectSelectionBase
 						}
 						
 						foreach(GameObject collidee in removableCollidees) {
-							collidees.Remove(collidee.GetInstanceID());
+                            if (isOwnerCallback()) { 
+                                collidees.Remove(collidee.GetInstanceID());
 							
-							// change color so user knows of intersection end
-							collidee.renderer.material.SetColor("_Color", Color.white);
+							    // change color so user knows of intersection end
+							    collidee.renderer.material.SetColor("_Color", Color.white);
+                            }
 						}
 						
 						if(multiple) {
@@ -118,7 +120,8 @@ public class HomerInteraction : ObjectSelectionBase
 									RaycastHit hit = hits[i];
 									GameObject collidee = hit.collider.gameObject;
 
-									if (hasObjectController(collidee) && 
+									if (isOwnerCallback() && 
+                                        hasObjectController(collidee) && 
 									    !collidees.Contains(collidee.GetInstanceID()))
 									{
 										collidees.Add(collidee.GetInstanceID(), collidee);
@@ -145,9 +148,13 @@ public class HomerInteraction : ObjectSelectionBase
 							if(Physics.Raycast(new Ray(physicalHand.transform.position, (physicalHand.transform.position - torso.transform.position ).normalized), out hit)) {
 								GameObject collidee = hit.collider.gameObject;
 								
-								if (hasObjectController(collidee) && 
+								if (
+                                    isOwnerCallback() &&
+                                    hasObjectController(collidee) && 
 								    !collidees.Contains(collidee.GetInstanceID())) {
-									collidees.Add(collidee.GetInstanceID(), collidee);
+									collidees.Add(collidee.GetInstanceID(), collidee
+                                        
+                                        );
 									//Debug.Log(collidee.GetInstanceID());
 									
 									// change color so user knows of intersection

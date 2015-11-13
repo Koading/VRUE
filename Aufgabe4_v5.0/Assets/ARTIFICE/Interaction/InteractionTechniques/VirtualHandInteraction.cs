@@ -87,6 +87,7 @@ public class VirtualHandInteraction : ObjectSelectionBase
     /// <param name="other">GameObject giben by the callback</param>
     public void OnTriggerEnter(Collider other)
     {
+        Debug.Log("OnTriggerEnter:" + isOwnerCallback());
         if (isOwnerCallback())
         {
             GameObject collidee = other.gameObject;

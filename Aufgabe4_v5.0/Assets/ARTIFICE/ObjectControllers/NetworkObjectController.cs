@@ -47,7 +47,7 @@ public class NetworkObjectController : ObjectController
     [RPC]
     public virtual void updateTransform (NetworkViewID viewID, Vector3 translation, Quaternion rotation, Vector3 poseOfInteraction,NetworkMessageInfo info) 
     {
-		
+        Debug.Log("updateTransform");
         if (isObjectAccessGranted(info.sender))
         {   
             base.updateTransform(translation, rotation, poseOfInteraction);

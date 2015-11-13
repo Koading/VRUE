@@ -139,9 +139,10 @@ public class UserManager : ScriptableObject {
          * 	- Find the NetworkPlayer assigned to the playerName in your datastructure
          * 	and return it.
         ----------------------------------------------------------------- */
-
+        Debug.Log("getNetworkPlayer:" + playerName);
         if(playerMap.ContainsKey(playerName))
         {
+            
             return (NetworkPlayer)playerMap[playerName];
         }
 
