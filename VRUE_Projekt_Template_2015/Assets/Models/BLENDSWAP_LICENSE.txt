@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
-Thank you for downloading "Snare Drum" by origalde
+Thank you for downloading "BC Rich Warlock Guitar" by cephei
 Released under
 Creative Commons Attribution 3.0
-Downloaded from http://www.blendswap.com/blends/view/68906
+Downloaded from http://www.blendswap.com/blends/view/67178
 
 The following is important licensing information, please keep this file for
 archival and future reference when working with the file. It's important that
@@ -23,10 +23,7 @@ Creative Commons Attribution 3.0
 This means that you can use it for any purpose you see fit, even commercially,
 as long as you respect these requirements:
 
-	--You MUST give credit to origalde.
-
-	--THIS BLEND IS MARKED AS FAN ART YOU ARE NOT ALLOWED TO USE IT COMMERCIALLY.
-	--http://en.wikipedia.org/wiki/Fan_art
+	--You MUST give credit to cephei.
 
 
 ################################################################################
@@ -35,7 +32,7 @@ as long as you respect these requirements:
 ABOUT THE BLEND:
 
 Ready for Blender 2.66
-Published on: 2013-06-27 12:27:04
+Published on: 2013-03-19 10:31:27
 
 --------------------------------------------------------------------------------
 
@@ -49,7 +46,7 @@ If you find anomalies in this blend or any of the contained files such as:
 	- Uncredited or incorrect use of other CC licensed works.
 	- Some other troubling issues[1].
 
-Please submit a report from  http://www.blendswap.com/blends/view/68906
+Please submit a report from  http://www.blendswap.com/blends/view/67178
 by pressing the red button with the flag, including links and details that serve
 as evidence and can help us to solve any conflicts or issues derived from the
 contents of this file.
