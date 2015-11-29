@@ -38,7 +38,7 @@ public class HomerInteraction : ObjectSelectionBase
 	* 	Implement Homer interaction technique
 	----------------------------------------------------------------- */
 		
-	private GameObject tracker = null;
+	public GameObject tracker = null;
 	private GameObject physicalHand = null;
 	private GameObject torso = null;
 	private float dh;
@@ -52,7 +52,7 @@ public class HomerInteraction : ObjectSelectionBase
 	public void Start()
 	{
 		tracker = GameObject.Find("TrackerObject");
-		torso = GameObject.Find ("InteractionOrigin");
+		torso = GameObject.Find ("InteractionObject");
         physicalHand = tracker;//GameObject.Find ("PhysicalHand");
 
 		// remove this as soon as GUI is ready

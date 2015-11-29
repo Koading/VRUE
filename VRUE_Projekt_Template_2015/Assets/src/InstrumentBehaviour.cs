@@ -12,6 +12,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 	void Start () {
         Debug.Log("InstrumentBehaviour Start");
         audio = this.gameObject.GetComponent<AudioSource>();
+
 	}
 	
 	// Update is called once per frame
