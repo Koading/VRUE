@@ -9,22 +9,39 @@ public class InstrumentBehaviour : MonoBehaviour {
 
     public AudioSource audio;
 	// Use this for initialization
+
+    public bool playState = false;
 	void Start () {
         Debug.Log("InstrumentBehaviour Start");
-        audio = this.gameObject.GetComponent<AudioSource>();
+        //audio = this.gameObject.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	    //TODO kinect stuff
         Debug.Log("InstrumentBehaviour Update");
-        if(audio)
-        {
-            if (!audio.loop)
-            { 
-                audio.loop = true;
-                audio.Play();
+        if(playState && audio)
+        { 
+            {
+                if (!audio.loop)
+                { 
+                    audio.loop = true;
+                    audio.Play();
+                }
             }
         }
 	}
+
+
+    //TODO call this from kinect functions
+    void OnKinectTriggerStart()
+    {
+        this.playState = true;
+    }
+
+    void OnKinectTriggerStop()
+    {
+        this.playState = false;
+    }
+
 }

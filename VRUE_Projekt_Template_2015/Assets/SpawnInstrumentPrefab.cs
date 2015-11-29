@@ -12,6 +12,8 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
 
     GameObject instantiatedPrefab;
 
+    public Transform playerPrefab;
+
     Button button_;
 
 	// Use this for initialization
@@ -40,7 +42,24 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
             {
 
                 Debug.Log("instantiating");
-                instantiatedPrefab = (GameObject)GameObject.Instantiate(prefab, new Vector3(0f,0f,0f),Quaternion.identity);
+
+                //change to instantiate over network: ask for client, do for server
+                /*
+                if (Network.isClient)
+                {
+
+                }
+                else if (Network.isServer)
+                {
+                    //Network.instantiate
+                }
+                else
+                {
+                    //basically invalid state
+                }
+                */
+                instantiatedPrefab = (GameObject) Network.Instantiate(prefab, new Vector3(0f,0f,0f), Quaternion.identity, 0);
+                //instantiatedPrefab = (GameObject)GameObject.Instantiate(prefab, new Vector3(0f,0f,0f),Quaternion.identity);
                 Debug.Log(instantiatedPrefab);
 
                 this.instrument = instantiatedPrefab;
