@@ -13,7 +13,7 @@ public class InstrumentBehaviour : MonoBehaviour {
     public bool playState = false;
 	void Start () {
         Debug.Log("InstrumentBehaviour Start");
-        //audio = this.gameObject.GetComponent<AudioSource>();
+        audio = this.gameObject.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
