@@ -59,7 +59,21 @@ public class SpawnInstrumentButtonBehaviour : MonoBehaviour {
                 spaceMouse.active = true;
             }
 
+            
+            //reset positioning
+            //motivation: after positioning one instrument, the next magically gets a global position != origin
+            //TODO: check if this isn't a dirty hack
+            instrument.transform.localPosition = new Vector3(0f, 0f, 0f);
+            instrument.transform.position = new Vector3(0f, 0f, 0f);
+
+            spaceMouse.transform.position = new Vector3(0f, 0f, 0f);
+            spaceMouse.transform.localPosition = new Vector3(0f, 0f, 0f);
+
+            tracker.transform.position = new Vector3(0f, 0f, 0f);
+            tracker.transform.position = new Vector3(0f, 0f, 0f);
+
             instrument.transform.parent = tracker.transform;
+
         }
     }
 

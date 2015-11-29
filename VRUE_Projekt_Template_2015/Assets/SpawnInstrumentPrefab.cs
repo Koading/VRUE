@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
 {
 
+    //generic use:
+    //create a prefab from a model, drag element from prefab folder to public field in gameinspector
     public Object prefab;
+
     GameObject instantiatedPrefab;
 
     Button button_;
@@ -27,6 +30,7 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
     public void OnClick()
     {
         Debug.Log("Button instantiate prefab clicked");
+
         //
         if(prefab)
         {
@@ -36,11 +40,12 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
             {
 
                 Debug.Log("instantiating");
-                instantiatedPrefab = (GameObject)GameObject.Instantiate(prefab);
+                instantiatedPrefab = (GameObject)GameObject.Instantiate(prefab, new Vector3(0f,0f,0f),Quaternion.identity);
                 Debug.Log(instantiatedPrefab);
 
                 this.instrument = instantiatedPrefab;
                 this.MoveInstrumentToSpaceMouseParent();
+                
             }
         }
     }
