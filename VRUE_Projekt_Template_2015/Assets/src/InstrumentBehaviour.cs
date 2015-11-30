@@ -7,11 +7,11 @@ public class InstrumentBehaviour : MonoBehaviour {
     //public setter for audioclip, for each instrument
     //public AudioClip clip;
 
-    public AudioSource audio;
+    public AudioSource audioSource;
 	// Use this for initialization
 	void Start () {
         Debug.Log("InstrumentBehaviour Start");
-        audio = this.gameObject.GetComponent<AudioSource>();
+		audioSource = this.gameObject.GetComponent<AudioSource>();
 
 	}
 	
@@ -19,13 +19,18 @@ public class InstrumentBehaviour : MonoBehaviour {
 	void Update () {
 	    //TODO kinect stuff
         Debug.Log("InstrumentBehaviour Update");
-        if(audio)
-        {
-            if (!audio.loop)
-            { 
-                audio.loop = true;
-                audio.Play();
-            }
+		if(audioSource)
+		{
+			if(Input.GetKeyDown(KeyCode.W)) {
+				if (!audioSource.loop)
+				{ 
+					audioSource.loop = true;
+					audioSource.Play();
+				} else {
+					audioSource.loop = false;
+					audioSource.Stop();
+				}
+			}
         }
 	}
 }
