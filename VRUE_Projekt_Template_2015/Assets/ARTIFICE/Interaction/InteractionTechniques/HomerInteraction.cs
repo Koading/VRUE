@@ -112,21 +112,23 @@ public class HomerInteraction : ObjectSelectionBase
 									RaycastHit hit = hits[i];
 									GameObject collidee = hit.collider.gameObject;
 
+									if(removableCollidees.Contains(collidee)) {
+										removableCollidees.Remove(collidee);
+									}
+									
 									if (isOwnerCallback() && 
-                                        hasObjectController(collidee) && 
-									    !collidees.Contains(collidee.GetInstanceID()))
-									{
-										if(removableCollidees.Contains(collidee)) {
-											removableCollidees.Remove(collidee);
-										}
-										collidees.Add(collidee.GetInstanceID(), collidee);
-										//Debug.Log(collidee.GetInstanceID());
-										
-										// change color so user knows of intersection
-										collidee.renderer.material.SetColor("_Color", Color.blue);
-										InstrumentBehaviour behaviour = collidee.GetComponent<InstrumentBehaviour>();
-										if(behaviour) {
-											behaviour.OnKinectTriggerStart();
+                                        hasObjectController(collidee) ) {
+																			
+										if(!collidees.Contains(collidee.GetInstanceID())) {
+											collidees.Add(collidee.GetInstanceID(), collidee);
+											Debug.Log(collidee.GetInstanceID());
+											
+											// change color so user knows of intersection
+											collidee.renderer.material.SetColor("_Color", Color.blue);
+											InstrumentBehaviour behaviour = collidee.GetComponent<InstrumentBehaviour>();
+											if(behaviour) {
+												behaviour.OnKinectTriggerStart();
+											}
 										}
 									}
 								}
@@ -146,24 +148,26 @@ public class HomerInteraction : ObjectSelectionBase
 							RaycastHit hit;
 							if(Physics.Raycast(new Ray(physicalHand.transform.position, (physicalHand.transform.position - torso.transform.position ).normalized), out hit)) {
 								GameObject collidee = hit.collider.gameObject;
+
+								if(removableCollidees.Contains(collidee)) {
+									removableCollidees.Remove(collidee);
+								}
 								
-								if (
-                                    isOwnerCallback() &&
-                                    hasObjectController(collidee) && 
-								    !collidees.Contains(collidee.GetInstanceID())) {
-									collidees.Add(collidee.GetInstanceID(), collidee                                    
-                                        );
-									if(removableCollidees.Contains(collidee)) {
-										removableCollidees.Remove(collidee);
-									}
-									//Debug.Log(collidee.GetInstanceID());
+								if( isOwnerCallback() &&
+                                    hasObjectController(collidee) ) {
+									if(!collidees.Contains(collidee.GetInstanceID())) {
+										collidees.Add(collidee.GetInstanceID(), collidee);
+									
+										Debug.Log(collidee.GetInstanceID());
 									
 									// change color so user knows of intersection
-									collidee.renderer.material.SetColor("_Color", Color.blue);
+										collidee.renderer.material.SetColor("_Color", Color.blue);
+									}
 								}
 
 								dh = (tracker.transform.position - torso.transform.position).magnitude;
 								d0 = (collidee.transform.position - torso.transform.position).magnitude;
+							
 							} 
 						}
 

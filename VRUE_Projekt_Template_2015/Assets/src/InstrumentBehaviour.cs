@@ -12,10 +12,16 @@ public class InstrumentBehaviour : MonoBehaviour {
 
     public bool playState = false;
 	private bool alreadyChangedState = false;
+	private bool selected = false;
+	private float maxVolumne;
+
+	public float incrementalDecline = 0.1f;
+
 	void Start () {
         Debug.Log("InstrumentBehaviour Start");
 
 		audioSource = this.gameObject.GetComponent<AudioSource>();
+		maxVolumne = audioSource.volume;
 
 	}
 	
@@ -23,17 +29,35 @@ public class InstrumentBehaviour : MonoBehaviour {
 	void Update () {
 	    //TODO kinect stuff
         Debug.Log("InstrumentBehaviour Update");
-        if (playState && audio) { 
-            
-			if(Input.GetKeyDown(KeyCode.W)) {
+        if (selected && !alreadyChangedState) {
+			Debug.Log ("Entered selected Instrument state");
+			if(Input.GetKeyDown(KeyCode.E)) {
+				playState = !playState;
+				Debug.Log("Changed Play state to "  + playState); 
+				
 				alreadyChangedState = true;
+			}
+		}
+
+		if (playState && audio) { 
+            
+			if(audioSource.volume > 0.0f) {
+				audioSource.volume -= Mathf.Max(0.0f, incrementalDecline * Time.deltaTime);
+			}
+			Debug.Log("Music is now on volume: " + audioSource.volume);
+
+			if(Input.GetKeyDown(KeyCode.E)) {
 				if (!audioSource.loop) { 
 					audioSource.loop = true;
 					audioSource.Play ();
-				} else {
-					audioSource.loop = true;
+				} 
+
+				if(audioSource.volume < 0.1f) {
 					audioSource.Stop();
+					audioSource.Play();
 				}
+
+				audioSource.volume = maxVolumne;
 			}			
 		}
 	}
@@ -42,14 +66,16 @@ public class InstrumentBehaviour : MonoBehaviour {
     //TODO call this from kinect functions
     public void OnKinectTriggerStart()
     {
-		this.playState = true;
+		Debug.Log ("OnKinect Enter");
+		this.selected = true;
 		
     }
 
     public void OnKinectTriggerStop()
-    {
-		alreadyChangedState = true;
-		this.playState = false;
+	{
+		Debug.Log ("OnKinect Leave");
+		alreadyChangedState = false;
+		this.selected = false;
     }
 
 }
