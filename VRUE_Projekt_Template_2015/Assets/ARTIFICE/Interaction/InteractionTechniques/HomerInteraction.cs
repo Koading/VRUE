@@ -52,7 +52,7 @@ public class HomerInteraction : ObjectSelectionBase
 	public void Start()
 	{
 		tracker = GameObject.Find("TrackerObject");
-		torso = GameObject.Find ("back4");
+		torso = GameObject.Find ("RigSpine3");
         physicalHand = tracker;//GameObject.Find ("PhysicalHand");
 
 		// remove this as soon as GUI is ready
