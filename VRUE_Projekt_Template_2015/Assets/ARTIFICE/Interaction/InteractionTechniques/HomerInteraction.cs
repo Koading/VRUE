@@ -38,7 +38,7 @@ public class HomerInteraction : ObjectSelectionBase
 	* 	Implement Homer interaction technique
 	----------------------------------------------------------------- */
 		
-	public GameObject tracker = null;
+	public GameObject tracker;
 	private GameObject physicalHand = null;
 	private GameObject torso = null;
 	private float dh;
@@ -52,7 +52,7 @@ public class HomerInteraction : ObjectSelectionBase
 	public void Start()
 	{
 		tracker = GameObject.Find("TrackerObject");
-		torso = GameObject.Find ("InteractionObject");
+		torso = GameObject.Find ("back4");
         physicalHand = tracker;//GameObject.Find ("PhysicalHand");
 
 		// remove this as soon as GUI is ready
@@ -102,15 +102,7 @@ public class HomerInteraction : ObjectSelectionBase
 						foreach(GameObject collidee in collidees.Values) {
 							removableCollidees.Add(collidee);
 						}
-						
-						foreach(GameObject collidee in removableCollidees) {
-                            if (isOwnerCallback()) { 
-                                collidees.Remove(collidee.GetInstanceID());
-							
-							    // change color so user knows of intersection end
-							    collidee.renderer.material.SetColor("_Color", Color.white);
-                            }
-						}
+					
 						
 						if(multiple) {
 
@@ -124,11 +116,18 @@ public class HomerInteraction : ObjectSelectionBase
                                         hasObjectController(collidee) && 
 									    !collidees.Contains(collidee.GetInstanceID()))
 									{
+										if(removableCollidees.Contains(collidee)) {
+											removableCollidees.Remove(collidee);
+										}
 										collidees.Add(collidee.GetInstanceID(), collidee);
 										//Debug.Log(collidee.GetInstanceID());
 										
 										// change color so user knows of intersection
 										collidee.renderer.material.SetColor("_Color", Color.blue);
+										InstrumentBehaviour behaviour = collidee.GetComponent<InstrumentBehaviour>();
+										if(behaviour) {
+											behaviour.OnKinectTriggerStart();
+										}
 									}
 								}
 								Vector3 positionOfColliddeeObject = new Vector3(0,0,0);
@@ -152,9 +151,11 @@ public class HomerInteraction : ObjectSelectionBase
                                     isOwnerCallback() &&
                                     hasObjectController(collidee) && 
 								    !collidees.Contains(collidee.GetInstanceID())) {
-									collidees.Add(collidee.GetInstanceID(), collidee
-                                        
+									collidees.Add(collidee.GetInstanceID(), collidee                                    
                                         );
+									if(removableCollidees.Contains(collidee)) {
+										removableCollidees.Remove(collidee);
+									}
 									//Debug.Log(collidee.GetInstanceID());
 									
 									// change color so user knows of intersection
@@ -165,8 +166,21 @@ public class HomerInteraction : ObjectSelectionBase
 								d0 = (collidee.transform.position - torso.transform.position).magnitude;
 							} 
 						}
-					}
 
+						foreach(GameObject collidee in removableCollidees) {
+							if (isOwnerCallback()) { 
+								collidees.Remove(collidee.GetInstanceID());
+								
+								// change color so user knows of intersection end
+								collidee.renderer.material.SetColor("_Color", Color.white);
+								InstrumentBehaviour behaviour = collidee.GetComponent<InstrumentBehaviour>();
+								if(behaviour) {
+									behaviour.OnKinectTriggerStop();
+								}
+							}
+						}
+					}
+					
 					
 					// Transform (translate and rotate) selected object depending on of virtual hand's transformation
 					if (selected)
