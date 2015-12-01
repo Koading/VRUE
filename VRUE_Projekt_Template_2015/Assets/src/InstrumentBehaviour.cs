@@ -13,14 +13,16 @@ public class InstrumentBehaviour : MonoBehaviour {
     // Use this for initialization
 
     public bool playState = false;
-	private bool alreadyChangedState = false;
-	private bool selected = false;
+	public bool alreadyChangedState = false;
+	public bool selected = false;
 	private float maxVolumne;
 
     public bool isSelected;
 	public float incrementalDecline = 0.1f;
 
     GameObject spaceMouse;
+
+	private Material previosMaterial;
 
 
     private float oldPostionY;
@@ -31,14 +33,18 @@ public class InstrumentBehaviour : MonoBehaviour {
         animation = this.GetComponent<Animator>();
 		maxVolumne = audioSource.volume;
 
+
+
         spaceMouse = GameObject.Find("Spacemouse");
-        oldPostionY = spaceMouse.transform.localEulerAngles.y;
+		if (spaceMouse) {
+			oldPostionY = spaceMouse.transform.localEulerAngles.y;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if(isSelected && audioSource)
+        if(isSelected && audioSource && spaceMouse)
         {
             float deltaSpaceY = spaceMouse.transform.localEulerAngles.y;
             
@@ -58,9 +64,20 @@ public class InstrumentBehaviour : MonoBehaviour {
 			Debug.Log ("Entered selected Instrument state");
 			if(Input.GetKeyDown(KeyCode.E)) {
 				playState = !playState;
+
+				if(!playState) {
+					audioSource.Stop();
+					animation.enabled = false;
+				} else {
+					animation.enabled = true;
+				}
+
 				Debug.Log("Changed Play state to "  + playState); 
 				
 				alreadyChangedState = true;
+			}
+			if(Input.GetKeyDown(KeyCode.R)) {
+				isSelected = !isSelected;
 			}
 		}
 
@@ -72,18 +89,16 @@ public class InstrumentBehaviour : MonoBehaviour {
 			Debug.Log("Music is now on volume: " + audioSource.volume);
 
             //Debug.Log("KeyPressed E:" + Input.GetKeyDown(KeyCode.E));
-			if(Input.GetKeyDown(KeyCode.E)) {
+			if(Input.GetKeyDown(KeyCode.W)) {
                 
 				if (!audioSource.loop) { 
 					audioSource.loop = true;
 					audioSource.Play ();
-                    animation.enabled = true;
 				} 
 
 				if(audioSource.volume < 0.1f) {
 					audioSource.Stop();
 					audioSource.Play();
-                    animation.enabled = false;
 				}
 
 				audioSource.volume = maxVolumne;
@@ -98,7 +113,6 @@ public class InstrumentBehaviour : MonoBehaviour {
     {
 		Debug.Log ("OnKinect Enter");
 		this.selected = true;
-		
     }
 
     public void OnKinectTriggerStop()
@@ -106,6 +120,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 		Debug.Log ("OnKinect Leave");
 		alreadyChangedState = false;
 		this.selected = false;
+
     }
 
 }
