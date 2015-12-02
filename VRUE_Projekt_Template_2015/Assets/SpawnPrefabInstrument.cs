@@ -9,7 +9,7 @@ public class SpawnPrefabInstrument : SpawnPrefab {
 	// Use this for initialization
 	void Start () {
         button = this.GetComponent<Button>();
-        button.onClick.AddListener(this.SpawnNetworkObject);
+        //button.onClick.AddListener(this.SpawnNetworkObject);
 	}
 	
 }

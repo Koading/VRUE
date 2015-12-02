@@ -148,6 +148,7 @@ public class TrackSpaceMouse : TrackProvider
 			if(!Manager.useDedicatedServer || (Manager.useDedicatedServer && Network.isClient)) 
 			{
 		        // generate tracker object for space mouse
+                Debug.Log("TrackSpaceMouse devicename: " + deviceName);
 		        generateTracker(deviceName);
 		        gameObject.transform.hideFlags |= HideFlags.NotEditable;
 			}

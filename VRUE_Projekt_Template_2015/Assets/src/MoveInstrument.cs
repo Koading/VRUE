@@ -54,6 +54,7 @@ public class SpawnInstrumentButtonBehaviour : MonoBehaviour {
 
         if(instrument)
         {
+
             if (!spaceMouse.active)
             {
                 spaceMouse.active = true;

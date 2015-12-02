@@ -67,7 +67,7 @@ public class SpawnPrefab : MonoBehaviour {
 	/// <summary>
 	/// Uses Network.Instantiate to create an Object
 	/// </summary>
-    protected void SpawnNetworkObject()
+    private void SpawnNetworkObject()
     {
         //create prefab
         Network.Instantiate(playerPrefab, transform.position, transform.rotation, 0);
@@ -77,7 +77,7 @@ public class SpawnPrefab : MonoBehaviour {
 	/// <summary>
 	///  Parents the Object with the given parent-object
 	/// </summary>
-	protected void relocateObject()
+	private void relocateObject()
 	{
 		string objName="/"+playerPrefab.name+"(Clone)";
 		Debug.Log(objName);

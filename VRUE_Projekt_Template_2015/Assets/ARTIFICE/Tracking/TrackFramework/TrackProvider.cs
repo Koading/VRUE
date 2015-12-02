@@ -80,6 +80,7 @@ public abstract class TrackProvider : TrackBase {
     /// </summary>
 	protected void generateTracker(string deviceName) 
     {
+        Debug.Log("TrackProvider devicename: " + deviceName);
         tracker = Manager.instance.tracking.getTracker(deviceName);
     }
 
