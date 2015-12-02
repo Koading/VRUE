@@ -47,6 +47,7 @@ public class HomerInteraction : ObjectSelectionBase
 	private bool multiple = true;
 	private bool keyDownAlready = false;
 
+
 	/// <summary>
 	/// </summary>
 	public void Start()
@@ -78,7 +79,6 @@ public class HomerInteraction : ObjectSelectionBase
 			if (tracker.transform.parent.GetComponent<TrackBase>().isTracked())
 			{
 				if(this.enabled) {
-					Debug.Log(multiple);
 					if (!keyDownAlready && Input.GetKeyDown (KeyCode.M)) {
 						keyDownAlready = true;
 						multiple = !multiple;
@@ -107,10 +107,13 @@ public class HomerInteraction : ObjectSelectionBase
 						if(multiple) {
 
 							RaycastHit[] hits = Physics.RaycastAll(new Ray(physicalHand.transform.position, (physicalHand.transform.position - torso.transform.position ).normalized));
+							Debug.Log ("Homer hits: "  +  hits.Length);
 							if(hits.Length > 0 ) {
 								for (int i = 0; i < hits.Length; i++) {
 									RaycastHit hit = hits[i];
 									GameObject collidee = hit.collider.gameObject;
+
+									Debug.Log ("Collidee name: " + collidee.name);
 
 									if(removableCollidees.Contains(collidee)) {
 										removableCollidees.Remove(collidee);
@@ -121,10 +124,7 @@ public class HomerInteraction : ObjectSelectionBase
 																			
 										if(!collidees.Contains(collidee.GetInstanceID())) {
 											collidees.Add(collidee.GetInstanceID(), collidee);
-											Debug.Log(collidee.GetInstanceID());
 											
-											// change color so user knows of intersection
-											collidee.renderer.material.SetColor("_Color", Color.blue);
 											InstrumentBehaviour behaviour = collidee.GetComponent<InstrumentBehaviour>();
 											if(behaviour) {
 												behaviour.OnKinectTriggerStart();
@@ -138,7 +138,7 @@ public class HomerInteraction : ObjectSelectionBase
 									positionOfColliddeeObject += collidee.transform.position;
 								}
 
-								Debug.Log("Number of elements in collidee");
+								Debug.Log("Number of elements in collidee: " + collidees.Count);
 								
 								positionOfColliddeeObject = positionOfColliddeeObject / collidees.Count;
 								dh = (physicalHand.transform.position - torso.transform.position).magnitude;
@@ -160,8 +160,6 @@ public class HomerInteraction : ObjectSelectionBase
 									
 										Debug.Log(collidee.GetInstanceID());
 									
-									// change color so user knows of intersection
-										collidee.renderer.material.SetColor("_Color", Color.blue);
 									}
 								}
 
@@ -174,9 +172,7 @@ public class HomerInteraction : ObjectSelectionBase
 						foreach(GameObject collidee in removableCollidees) {
 							if (isOwnerCallback()) { 
 								collidees.Remove(collidee.GetInstanceID());
-								
-								// change color so user knows of intersection end
-								collidee.renderer.material.SetColor("_Color", Color.white);
+
 								InstrumentBehaviour behaviour = collidee.GetComponent<InstrumentBehaviour>();
 								if(behaviour) {
 									behaviour.OnKinectTriggerStop();
