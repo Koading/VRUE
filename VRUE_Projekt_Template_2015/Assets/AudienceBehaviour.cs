@@ -7,26 +7,32 @@ public class AudienceBehaviour : MonoBehaviour {
 
     const string instrumentPool = "Active Instrument Pool";
     
-    private GameObject assignedInstrument = null;
-    private InstrumentBehaviour assignedInstrumentScript = null;
-    private Animation animation;
+    public GameObject assignedInstrument = null;
+
+    public InstrumentBehaviour assignedInstrumentScript; //{get;set;}
+    
+
+    private Animator animation;
 	void Start () {
-        animation = this.transform.parent.GetComponent<Animation>();
+        assignedInstrumentScript = null;
+        animation = this.transform.parent.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	    if(assignedInstrumentScript)
         {
-            //if(assignedInstrumentScript.audioSource.active< )
+            if(assignedInstrumentScript.audioSource.active 
+                && assignedInstrumentScript.audioSource.volume > 0.1 
+                && assignedInstrumentScript.isPlaying())
             {
-
+                animation.active = true;
+            }
+            else
+            {
+                animation.active = false;
             }
         }
 	}
 
-    public void assignInstrument(InstrumentBehaviour ib)
-    {
-        assignedInstrumentScript = ib;
-    }
 }

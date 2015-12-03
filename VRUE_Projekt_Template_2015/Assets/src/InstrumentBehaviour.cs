@@ -123,4 +123,9 @@ public class InstrumentBehaviour : MonoBehaviour {
 
     }
 
+    public bool isPlaying()
+    { 
+        return playState;
+    }
+
 }
