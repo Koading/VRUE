@@ -9,7 +9,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 
     public AudioSource audioSource;
 
-    private Animator animation;
+    private Animator instrumentAnimation;
     // Use this for initialization
 
     public bool playState = false;
@@ -24,21 +24,14 @@ public class InstrumentBehaviour : MonoBehaviour {
 
 	private Material previosMaterial;
 
-
-    private float oldPostionY;
 	void Start () {
         Debug.Log("InstrumentBehaviour Start");
 
 		audioSource = this.gameObject.GetComponent<AudioSource>();
-        animation = this.GetComponent<Animator>();
+        instrumentAnimation = this.GetComponent<Animator>();
 		maxVolumne = audioSource.volume;
 
-
-
         spaceMouse = GameObject.Find("Spacemouse");
-		if (spaceMouse) {
-			oldPostionY = spaceMouse.transform.localEulerAngles.y;
-		}
 	}
 	
 	// Update is called once per frame
@@ -59,7 +52,7 @@ public class InstrumentBehaviour : MonoBehaviour {
         }
 
 	    //TODO kinect stuff
-        Debug.Log("InstrumentBehaviour Update");
+        //Debug.Log("InstrumentBehaviour Update");
         if (selected && !alreadyChangedState) {
 			Debug.Log ("Entered selected Instrument state");
 			if(Input.GetKeyDown(KeyCode.E)) {
@@ -67,9 +60,9 @@ public class InstrumentBehaviour : MonoBehaviour {
 
 				if(!playState) {
 					audioSource.Stop();
-					animation.enabled = false;
+					instrumentAnimation.enabled = false;
 				} else {
-					animation.enabled = true;
+					instrumentAnimation.enabled = true;
 				}
 
 				Debug.Log("Changed Play state to "  + playState); 

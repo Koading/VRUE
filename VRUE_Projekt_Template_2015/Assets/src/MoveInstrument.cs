@@ -55,9 +55,9 @@ public class SpawnInstrumentButtonBehaviour : MonoBehaviour {
         if(instrument)
         {
 
-            if (!spaceMouse.active)
+            if (!spaceMouse.gameObject.activeSelf)
             {
-                spaceMouse.active = true;
+                spaceMouse.SetActive(true);
             }
 
             

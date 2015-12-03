@@ -112,7 +112,7 @@ public class TrackBone : TrackProvider
 				
 				axis.x=-axis.x;
 				axis.y=-axis.y;
-				axis.z=axis.z;
+				//axis.z=axis.z;
 				
 				orientation=Quaternion.AngleAxis(angle,axis);
 				////////////////////

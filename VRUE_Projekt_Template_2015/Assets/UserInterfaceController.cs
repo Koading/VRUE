@@ -19,9 +19,9 @@ public class UserInterfaceController : MonoBehaviour {
 
     void OnConnect()
     {
-        if (Network.isClient && !userInterface.transform.Find("Canvas SpaceMouseUser").active)
+        if (Network.isClient && !userInterface.transform.Find("Canvas SpaceMouseUser").gameObject.activeSelf)
         {
-            userInterface.transform.Find("Canvas SpaceMouseUser").active = true;
+            userInterface.transform.Find("Canvas SpaceMouseUser").gameObject.SetActive(true);
         }
     }
 }

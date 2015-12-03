@@ -12,25 +12,26 @@ public class AudienceBehaviour : MonoBehaviour {
     public InstrumentBehaviour assignedInstrumentScript; //{get;set;}
     
 
-    private Animator animation;
-	void Start () {
+    void Start () {
         assignedInstrumentScript = null;
-        animation = this.transform.parent.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	    if(assignedInstrumentScript)
         {
-            if(assignedInstrumentScript.audioSource.active 
-                && assignedInstrumentScript.audioSource.volume > 0.1 
+            if (assignedInstrumentScript.audioSource)
+            {
+                if (assignedInstrumentScript.audioSource.gameObject.activeSelf
+                && assignedInstrumentScript.audioSource.volume > 0.1
                 && assignedInstrumentScript.isPlaying())
-            {
-                animation.active = true;
-            }
-            else
-            {
-                animation.active = false;
+                {
+                    animation.gameObject.SetActive(true);
+                }
+                else
+                {
+                    animation.gameObject.SetActive(false);
+                }
             }
         }
 	}

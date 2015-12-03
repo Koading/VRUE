@@ -53,9 +53,6 @@ public class GoGoInteraction : ObjectSelectionBase
     GameObject virtualHand;
     GameObject physicalHand;
 
-    TrackMarker trackMarker;
-    TrackBase trackBase; 
-
     public float thresholdDistance = 5.0f; // D
     public float coefficient = 0.5f;       // k
     //GOGO: when distance > distancethreshold : position = distance + k * (distance - threshold) ^ 2
@@ -69,10 +66,6 @@ public class GoGoInteraction : ObjectSelectionBase
         marker = GameObject.Find("Marker1");
         
         tracker = GameObject.Find("TrackerObject");
-
-        trackMarker = marker.GetComponent<TrackMarker>();
-        //trackBase = trackerObject.transform.GetComponent<TrackBase>();
-        trackBase = tracker.transform.parent.GetComponent<TrackBase>();
 
         //trackerObject = GameObject.Find("TrackerObject");
         interactionObject = GameObject.Find("InteractionObject");
