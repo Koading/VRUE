@@ -36,72 +36,106 @@ public class InstrumentBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(selected && audioSource && spaceMouse)
+
+        ControlMaxVolume();
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            CommandInstrument();
+        }
+		if(Input.GetKeyDown(KeyCode.W)) {
+            Andante();
+		}
+
+        ApplyIncrementalDecline();
+        //oldPostionY = spaceMouse.transform.localEulerAngles.y;
+	}
+
+
+    /**
+     * 
+     */
+    private void ControlMaxVolume()
+    {
+        if (selected && audioSource && spaceMouse)
         {
             float deltaSpaceY = spaceMouse.transform.localEulerAngles.y;
-            
+
             //Debug.Log("deltay: " + deltaSpaceY);
-            
+
             if (spaceMouse.transform.localEulerAngles.y < 10f)
                 deltaSpaceY = 0;
             if (spaceMouse.transform.localEulerAngles.y >= 180f)
                 deltaSpaceY = spaceMouse.transform.localEulerAngles.y - 360f;
 
-            maxVolumne = Mathf.Max(Mathf.Min( maxVolumne + maxVolumne * (-deltaSpaceY / 360f) * Time.deltaTime, 1.0f),0.2f);
+            maxVolumne = Mathf.Max(Mathf.Min(maxVolumne + maxVolumne * (-deltaSpaceY / 360f) * Time.deltaTime, 1.0f), 0.2f);
             Debug.Log("maxVolume:" + maxVolumne);
         }
+    }
+    private void Andante()
+    {
+	    if (playState && audioSource) { 
+     
+            if (!audioSource.loop)
+            {
+                audioSource.loop = true;
+                //audioSource.Play ();
+                this.Play();
+            }
 
-	    //TODO kinect stuff
-        //Debug.Log("InstrumentBehaviour Update");
-        if (selected && !alreadyChangedState) {
-			Debug.Log ("Entered selected Instrument state");
-			if(Input.GetKeyDown(KeyCode.E)) {
-				playState = !playState;
+            if (audioSource.volume < 0.1f)
+            {
+                //audioSource.Stop();
+                //audioSource.Play(); //????????????? wtf is this doing here?
+                this.stop();
+            }
 
-				if(!playState) {
-					audioSource.Stop();
-					instrumentAnimation.enabled = false;
-                    Debug.Log("disable animation");
-				} else {
+            audioSource.volume = maxVolumne;
+        }
+    }
+
+    private void CommandInstrument()
+    {
+        if (selected && !alreadyChangedState)
+        {
+            Debug.Log("Entered selected Instrument state");
+            {
+                playState = !playState;
+
+                if (!playState)
+                {
+                    //audioSource.Stop();
+                    //instrumentAnimation.enabled = false;
+                    this.stop();
+                }
+                else
+                {
                     Debug.Log("enable animation");
-					instrumentAnimation.enabled = true;
-				}
+                    instrumentAnimation.enabled = true;
+                }
 
-				Debug.Log("Changed Play state to "  + playState); 
-				
-				alreadyChangedState = true;
-			}
-			if(Input.GetKeyDown(KeyCode.R)) {
-				selected = !selected;
-			}
-		}
+                Debug.Log("Changed Play state to " + playState);
 
-		if (playState && audioSource) { 
-            
-			if(audioSource.volume > 0.0f) {
-				audioSource.volume -= Mathf.Max(0.0f, incrementalDecline * Time.deltaTime);
-			}
-			Debug.Log("Music is now on volume: " + audioSource.volume);
+                alreadyChangedState = true;
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                selected = !selected;
+            }
+        }
+    }
 
-            //Debug.Log("KeyPressed E:" + Input.GetKeyDown(KeyCode.E));
-			if(Input.GetKeyDown(KeyCode.W)) {
-                
-				if (!audioSource.loop) { 
-					audioSource.loop = true;
-					audioSource.Play ();
-				} 
-
-				if(audioSource.volume < 0.1f) {
-					audioSource.Stop();
-					audioSource.Play();
-				}
-
-				audioSource.volume = maxVolumne;
-			}			
-		}
-        //oldPostionY = spaceMouse.transform.localEulerAngles.y;
-	}
-
+    private void ApplyIncrementalDecline()
+    {
+        if (playState && audioSource)
+        {
+            if (audioSource.volume > 0.0f)
+            {
+                audioSource.volume -= Mathf.Max(0.0f, incrementalDecline * Time.deltaTime);
+            }
+            Debug.Log("Music is now on volume: " + audioSource.volume);
+        }
+    }
 
     //TODO call this from kinect functions
     public void OnKinectTriggerStart()
@@ -122,5 +156,17 @@ public class InstrumentBehaviour : MonoBehaviour {
     { 
         return playState;
     }
+
+    private void Play()
+    {
+        audioSource.Play();
+        instrumentAnimation.enabled = true;
+    }
+    private void stop()
+    {
+        audioSource.Play();
+        instrumentAnimation.enabled = false;
+    }
+
 
 }
