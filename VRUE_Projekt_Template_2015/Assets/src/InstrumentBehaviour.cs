@@ -15,9 +15,9 @@ public class InstrumentBehaviour : MonoBehaviour {
     public bool playState = false;
 	public bool alreadyChangedState = false;
 	public bool selected = false;
-	private float maxVolumne;
+	public float maxVolumne;
 
-    public bool isSelected;
+    //public bool isSelected;
 	public float incrementalDecline = 0.1f;
 
     GameObject spaceMouse;
@@ -36,8 +36,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if(isSelected && audioSource && spaceMouse)
+        if(selected && audioSource && spaceMouse)
         {
             float deltaSpaceY = spaceMouse.transform.localEulerAngles.y;
             
@@ -49,6 +48,7 @@ public class InstrumentBehaviour : MonoBehaviour {
                 deltaSpaceY = spaceMouse.transform.localEulerAngles.y - 360f;
 
             maxVolumne = Mathf.Max(Mathf.Min( maxVolumne + maxVolumne * (-deltaSpaceY / 360f) * Time.deltaTime, 1.0f),0.2f);
+            Debug.Log("maxVolume:" + maxVolumne);
         }
 
 	    //TODO kinect stuff
@@ -61,7 +61,9 @@ public class InstrumentBehaviour : MonoBehaviour {
 				if(!playState) {
 					audioSource.Stop();
 					instrumentAnimation.enabled = false;
+                    Debug.Log("disable animation");
 				} else {
+                    Debug.Log("enable animation");
 					instrumentAnimation.enabled = true;
 				}
 
@@ -70,7 +72,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 				alreadyChangedState = true;
 			}
 			if(Input.GetKeyDown(KeyCode.R)) {
-				isSelected = !isSelected;
+				selected = !selected;
 			}
 		}
 
