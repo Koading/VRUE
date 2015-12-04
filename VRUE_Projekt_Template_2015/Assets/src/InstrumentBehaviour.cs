@@ -135,6 +135,10 @@ public class InstrumentBehaviour : MonoBehaviour {
             }
             Debug.Log("Music is now on volume: " + audioSource.volume);
         }
+        if(audioSource.volume == 0.0f)
+        {
+            stop();
+        }
     }
 
     //TODO call this from kinect functions
