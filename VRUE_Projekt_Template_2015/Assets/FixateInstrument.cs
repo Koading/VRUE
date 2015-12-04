@@ -33,9 +33,15 @@ public class FixateInstrument : MonoBehaviour {
                 //assign instrument to random audience member
                 int numAudience = GameObject.Find("Audience").transform.childCount;
 
+                Debug.Log("numaudience " + numAudience);
+
                 for (int i = 0; i < numAudience; i++)
                 {
-                    GameObject visitor = GameObject.Find("Audience").transform.GetChild(Random.Range(0, numAudience - 1)).gameObject;
+                    int audIndex = Random.Range(0, numAudience - 1);
+
+                    Debug.Log("audindex " + audIndex);
+
+                    GameObject visitor = GameObject.Find("Audience").transform.GetChild(audIndex).gameObject;
                     visitor = visitor.transform.GetChild(0).gameObject;
 
                     if (visitor.GetComponents<AudienceBehaviour>() != null)
@@ -47,6 +53,7 @@ public class FixateInstrument : MonoBehaviour {
 
                         if (ab && !ab.assignedInstrumentScript)
                         {
+                            Debug.Log(obj.GetComponent<InstrumentBehaviour>());
                             ab.assignedInstrumentScript = obj.GetComponent<InstrumentBehaviour>();
                             break;
                         }
