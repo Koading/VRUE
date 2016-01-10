@@ -24,6 +24,24 @@ public class InstrumentBehaviour : MonoBehaviour {
 
 	private Material previosMaterial;
 
+
+	//struct healthBar
+
+		
+	
+
+	void OnGui()
+	{
+		Vector2 pos = new Vector2(20,20);
+		Vector2 size = new Vector2(100, 20);
+		
+		Texture2D empty = new Texture2D (100, 20,TextureFormat.Alpha8,false);
+
+		Debug.Log ("OnGUI call");
+	}
+
+
+
 	void Start () {
         Debug.Log("InstrumentBehaviour Start");
 
@@ -49,6 +67,14 @@ public class InstrumentBehaviour : MonoBehaviour {
 
         ApplyIncrementalDecline();
         //oldPostionY = spaceMouse.transform.localEulerAngles.y;
+
+		if (this.selected) {
+			//TODO: let both users see the instrument as selected
+			this.gameObject.renderer.material.SetColor("_Color", Color.blue);
+		} else {
+			this.gameObject.renderer.material.SetColor("_Color", Color.white);
+		}
+
 	}
 
 
@@ -87,7 +113,7 @@ public class InstrumentBehaviour : MonoBehaviour {
             {
                 //audioSource.Stop();
                 //audioSource.Play(); //????????????? wtf is this doing here?
-                this.stop();
+                this.Stop();
             }
 
             audioSource.volume = maxVolumne;
@@ -106,7 +132,7 @@ public class InstrumentBehaviour : MonoBehaviour {
                 {
                     //audioSource.Stop();
                     //instrumentAnimation.enabled = false;
-                    this.stop();
+                    this.Stop();
                 }
                 else
                 {
@@ -137,7 +163,7 @@ public class InstrumentBehaviour : MonoBehaviour {
         }
         if(audioSource.volume == 0.0f)
         {
-            stop();
+            Stop();
         }
     }
 
@@ -166,7 +192,9 @@ public class InstrumentBehaviour : MonoBehaviour {
         audioSource.Play();
         instrumentAnimation.enabled = true;
     }
-    private void stop()
+
+
+    public void Stop()
     {
         audioSource.Play();
         instrumentAnimation.enabled = false;
