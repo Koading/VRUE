@@ -32,10 +32,10 @@ public class InstrumentBehaviour : MonoBehaviour {
 
 	void OnGui()
 	{
-		Vector2 pos = new Vector2(20,20);
-		Vector2 size = new Vector2(100, 20);
+		//Vector2 pos = new Vector2(20,20);
+		//Vector2 size = new Vector2(100, 20);
 		
-		Texture2D empty = new Texture2D (100, 20,TextureFormat.Alpha8,false);
+		//Texture2D empty = new Texture2D (100, 20,TextureFormat.Alpha8,false);
 
 		Debug.Log ("OnGUI call");
 	}
@@ -66,14 +66,18 @@ public class InstrumentBehaviour : MonoBehaviour {
 		}
 
         ApplyIncrementalDecline();
+        
+        //TODO: Take the idea and make it better.
+        //this crashes because there is no renderer attached to the parent gameobject.
         //oldPostionY = spaceMouse.transform.localEulerAngles.y;
-
+        /*
 		if (this.selected) {
 			//TODO: let both users see the instrument as selected
 			this.gameObject.renderer.material.SetColor("_Color", Color.blue);
 		} else {
 			this.gameObject.renderer.material.SetColor("_Color", Color.white);
 		}
+        */
 
 	}
 
