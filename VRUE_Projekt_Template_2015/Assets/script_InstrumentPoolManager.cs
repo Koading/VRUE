@@ -38,6 +38,8 @@ public class script_InstrumentPoolManager : MonoBehaviour {
         {
             if (instrument.GetComponent<AudioSource>())
                 audioSources.Add(instrument.GetComponent<AudioSource>());
+
+            
         }
 
         //TODO: pipe audiosources into clip to save recording
