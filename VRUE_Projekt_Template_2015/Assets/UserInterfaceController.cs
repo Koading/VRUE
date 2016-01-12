@@ -66,7 +66,7 @@ public class UserInterfaceController : MonoBehaviour {
             {
                 case UIState.Home:
                     canvasControl.SetActive(false);
-                    canvasHome.SetActive(true);
+                    canvasHome.gameObject.SetActive(true);
                     canvasInstruments.SetActive(false);
                     
                     break;
@@ -108,7 +108,7 @@ public class UserInterfaceController : MonoBehaviour {
     {
         bool ret = !(state == oldState);
 
-        state = oldState;
+        oldState = state;
         
         return ret;
     }
