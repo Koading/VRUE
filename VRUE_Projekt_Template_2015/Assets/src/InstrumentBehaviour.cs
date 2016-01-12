@@ -54,6 +54,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log ("test" + Input.GetKeyDown(KeyCode.T));
 
         ControlMaxVolume();
 
@@ -63,6 +64,10 @@ public class InstrumentBehaviour : MonoBehaviour {
         }
 		if(Input.GetKeyDown(KeyCode.W)) {
             Andante();
+		}
+
+		if (Input.GetKeyDown (KeyCode.T)) {
+			playInstrument();
 		}
 
         ApplyIncrementalDecline();
@@ -79,6 +84,27 @@ public class InstrumentBehaviour : MonoBehaviour {
 		}
         */
 
+	}
+
+	private void playInstrument () {
+		if (playState && audioSource) { 
+			
+			if (!audioSource.loop)
+			{
+				audioSource.loop = true;
+				//audioSource.Play ();
+				this.Play();
+			}
+			
+			if (audioSource.volume < 0.1f)
+			{
+				//audioSource.Stop();
+				//audioSource.Play(); //????????????? wtf is this doing here?
+				this.Stop();
+			}
+			
+			audioSource.volume += (float)(maxVolumne / 10.0);
+		}
 	}
 
 

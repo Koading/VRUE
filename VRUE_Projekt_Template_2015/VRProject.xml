@@ -58,5 +58,34 @@
 			<descriptor>0</descriptor>
 		</output>
 	</gesture>
+	<gesture name="Spielen" timeout="0">
+		<input type="1">
+			<descriptor>right wrist</descriptor>
+			<descriptor>to the right of</descriptor>
+			<descriptor>torso</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>2</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="1">
+			<descriptor>right wrist</descriptor>
+			<descriptor>to the left of</descriptor>
+			<descriptor>torso</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>2</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
+		<output type="0">
+			<descriptor>press</descriptor>
+			<descriptor>t</descriptor>
+			<descriptor>for</descriptor>
+			<descriptor>0</descriptor>
+		</output>
+	</gesture>
 </gestures>
 
