@@ -19,7 +19,8 @@ public class UserInterfaceController : MonoBehaviour {
         Disabled = 0,
         Home = 1,
         Instrument = 2,
-        Control = 3
+        Control = 3,
+        Invalid = -1
     };
 
 
@@ -28,20 +29,24 @@ public class UserInterfaceController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         state = UIState.Disabled;
-        oldState = state;
+        oldState = UIState.Invalid;
         userInterface = GameObject.Find("UserInterface");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        OnConnect();
+        Debug.Log("Update userinterfacecontroller");
+        stateAction();
+
 	}
 
 
 
     void OnConnect()
     {
-        if (Network.isClient && !userInterface.transform.Find("Canvas SpaceMouseUser").gameObject.activeSelf)
+        if (Network.isClient 
+            && !userInterface.transform.Find("Canvas SpaceMouseUser").gameObject.activeSelf
+            && this.state == UIState.Disabled)
         {
             userInterface.transform.Find("Canvas SpaceMouseUser").gameObject.SetActive(true);
             this.changeState(UIState.Home);
@@ -52,17 +57,13 @@ public class UserInterfaceController : MonoBehaviour {
 
     private void stateAction()
     {
+        OnConnect();
+
         if(!this.stateChanged())
             return;
 
             switch(this.state)
             {
-                case UIState.Disabled:
-                    canvasControl.SetActive(false);
-                    canvasHome.SetActive(false);
-                    canvasInstruments.SetActive(false);
-                    
-                    break;
                 case UIState.Home:
                     canvasControl.SetActive(false);
                     canvasHome.SetActive(true);
@@ -83,6 +84,16 @@ public class UserInterfaceController : MonoBehaviour {
                     break;
                 default:
                     Debug.Log("shouldnt happen");
+                    canvasControl.SetActive(false);
+                    canvasHome.SetActive(false);
+                    canvasInstruments.SetActive(false);
+                    break;
+                case UIState.Disabled:
+                    canvasControl.SetActive(false);
+                    canvasHome.SetActive(false);
+                    canvasInstruments.SetActive(false);
+                    
+                    
                     break;
             }
 
@@ -100,5 +111,20 @@ public class UserInterfaceController : MonoBehaviour {
         state = oldState;
         
         return ret;
+    }
+
+    public void OnButtonInstruments()
+    {
+        this.changeState(UIState.Instrument);
+    }
+
+    public void OnButtonControlConductor()
+    {
+        this.changeState(UIState.Control);
+    }
+
+    public void OnButtonHome()
+    {
+        this.changeState(UIState.Home);
     }
 }

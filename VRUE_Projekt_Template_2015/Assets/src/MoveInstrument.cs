@@ -39,7 +39,6 @@ public class SpawnInstrumentButtonBehaviour : MonoBehaviour {
         tracker = GameObject.Find("TrackingCamera");
         spaceMouse = tracker.transform.Find("Spacemouse").gameObject;
         tracker = spaceMouse.transform.Find("TrackerObject").gameObject;
-
     }
     
     void OnClick()
