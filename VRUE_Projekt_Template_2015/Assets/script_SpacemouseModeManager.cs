@@ -31,7 +31,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         buttonFixConductor.onClick.AddListener(this.OnClickFixConductor);
     }
 
-    void OnClickControlConductor()
+    public void OnClickControlConductor()
     {
         if (controlConductor)
             return;
@@ -40,17 +40,20 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         this.gameObjectConductor = GameObject.Find("SpawnTest");
         this.gameObjectSpaceMouse = GameObject.Find("Spacemouse");
 
-        
         GameObject tracker = GameObject.Find("TrackingCamera");
         GameObject spaceMouse = tracker.transform.Find("Spacemouse").gameObject;
         tracker = spaceMouse.transform.Find("TrackerObject").gameObject;
 
-        gameObjectConductor.transform.parent = gameObjectSpaceMouse.transform;
+        spaceMouse.SetActive(true);
+
+        //gameObjectConductor.transform.parent = tracker.transform;
+
+        ExchangeParentStructure(gameObjectConductor, tracker);
 
         controlConductor = true;
     }
 
-    void OnClickFixConductor()
+    public void OnClickFixConductor()
     {
         if (!controlConductor)
             return;
@@ -58,9 +61,10 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         controlConductor = false;
     }
 
-    void OnClickResetConductor()
+    public void OnClickResetConductor()
     {
         gameObjectPult = GameObject.Find("Pult");
+
 
         this.ExchangeParentStructure(gameObjectConductor, gameObjectPult);
     }
@@ -68,11 +72,14 @@ public class script_SpacemouseModeManager : MonoBehaviour {
     
     public void ExchangeParentStructure(GameObject newChild, GameObject newParent)
     {
+
+        Debug.Log("Exchanging");
+        newChild.transform.position = new Vector3(0f, 0f, 0f);
         newChild.transform.localPosition = new Vector3(0f, 0f, 0f);
         //object1.transform.position = new Vector3(0f, 0f, 0f);
 
         //spaceMouse.transform.position = new Vector3(0f, 0f, 0f);
-        newParent.transform.localPosition = new Vector3(0f, 0f, 0f);
+        //newParent.transform.localPosition = new Vector3(0f, 0f, 0f);
 
         newChild.transform.parent = newParent.transform;
     }
