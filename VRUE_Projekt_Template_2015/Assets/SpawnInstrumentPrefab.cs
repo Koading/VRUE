@@ -16,6 +16,8 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
 
     Button button_;
 
+    script_LightPoolManager lightPoolManager;
+
 	// Use this for initialization
 	void Start () {
 
@@ -26,6 +28,8 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
             button_.onClick.AddListener(
                     this.OnClick
                 );
+
+        lightPoolManager = GameObject.Find("ControllerParent").GetComponent<script_LightPoolManager>();
 	}
 	
     
@@ -65,7 +69,10 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
                 this.instrument = instantiatedPrefab;
                 this.MoveInstrumentToSpaceMouseParent();
 
-                
+                if (lightPoolManager)
+                {
+                    lightPoolManager.OnSpawnInstrument(instrument);
+                }
             }
         }
     }
