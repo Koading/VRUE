@@ -13,7 +13,7 @@
 	<automaticassignment>true</automaticassignment>
 </server>
 <gestures>
-	<gesture name="Gesture 1" timeout="0">
+	<gesture name="ActivateInstrument" timeout="0.3">
 		<input type="0">
 			<descriptor>lean</descriptor>
 			<descriptor>forward</descriptor>
@@ -28,13 +28,49 @@
 			<descriptor>0</descriptor>
 		</output>
 	</gesture>
-	<gesture name="ActivateInstrument" timeout="0">
-		<input type="0">
-			<descriptor>jump</descriptor>
-			<descriptor/>
+	<gesture name="DirectInstrument" timeout="0">
+		<input type="3">
+			<descriptor>right wrist</descriptor>
+			<descriptor>to the left</descriptor>
 			<descriptor>at least</descriptor>
-			<descriptor>5</descriptor>
-			<descriptor>centimeters</descriptor>
+			<descriptor>4</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="3">
+			<descriptor>right wrist</descriptor>
+			<descriptor>up</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>4</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="3">
+			<descriptor>right wrist</descriptor>
+			<descriptor>to the right</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>4</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="3">
+			<descriptor>right wrist</descriptor>
+			<descriptor>down</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>4</descriptor>
+			<descriptor>cm/sec</descriptor>
 		</input>
 		<output type="0">
 			<descriptor>press</descriptor>
@@ -43,7 +79,7 @@
 			<descriptor>0</descriptor>
 		</output>
 	</gesture>
-	<gesture name="SelectInstrument" timeout="0.3">
+	<gesture name="ActivateInstrument" timeout="0">
 		<input type="0">
 			<descriptor>turn</descriptor>
 			<descriptor>left</descriptor>
@@ -83,6 +119,33 @@
 		<output type="0">
 			<descriptor>press</descriptor>
 			<descriptor>t</descriptor>
+			<descriptor>for</descriptor>
+			<descriptor>0</descriptor>
+		</output>
+	</gesture>
+	<gesture name="playGuitar" timeout="0">
+		<input type="3">
+			<descriptor>right wrist</descriptor>
+			<descriptor>down</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>4</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="3">
+			<descriptor>right wrist</descriptor>
+			<descriptor>up</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>4</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<output type="0">
+			<descriptor>press</descriptor>
+			<descriptor>g</descriptor>
 			<descriptor>for</descriptor>
 			<descriptor>0</descriptor>
 		</output>

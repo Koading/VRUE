@@ -17,7 +17,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 	public bool selected = false;
 	public float maxVolumne;
 
-    //public bool isSelected;
+    public bool controlVolumeSelected = false;
 	public float incrementalDecline = 0.1f;
 
     GameObject spaceMouse;
@@ -27,6 +27,8 @@ public class InstrumentBehaviour : MonoBehaviour {
 
 	//struct healthBar
 
+	
+	public bool dirigentAtInstrument = false;
 		
 	
 
@@ -53,22 +55,19 @@ public class InstrumentBehaviour : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		Debug.Log ("test" + Input.GetKeyDown(KeyCode.T));
+	public void Update () {
 
         ControlMaxVolume();
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            CommandInstrument();
-        }
-		if(Input.GetKeyDown(KeyCode.W)) {
-            Andante();
+		if (!dirigentAtInstrument) {
+			if (Input.GetKeyDown (KeyCode.W)) {
+				CommandInstrument ();
+			}
+			if (Input.GetKeyDown (KeyCode.E)) {
+				Andante ();
+			}
 		}
-
-		if (Input.GetKeyDown (KeyCode.T)) {
-			playInstrument();
-		}
+		
 
         ApplyIncrementalDecline();
         
@@ -86,20 +85,17 @@ public class InstrumentBehaviour : MonoBehaviour {
 
 	}
 
-	private void playInstrument () {
-		if (playState && audioSource) { 
+	protected void playInstrument () {
+		if (audioSource) { 
 			
 			if (!audioSource.loop)
 			{
 				audioSource.loop = true;
-				//audioSource.Play ();
 				this.Play();
 			}
 			
 			if (audioSource.volume < 0.1f)
 			{
-				//audioSource.Stop();
-				//audioSource.Play(); //????????????? wtf is this doing here?
 				this.Stop();
 			}
 			
@@ -113,11 +109,10 @@ public class InstrumentBehaviour : MonoBehaviour {
      */
     private void ControlMaxVolume()
     {
-        if (selected && audioSource && spaceMouse)
+		if (controlVolumeSelected && audioSource && spaceMouse)
         {
             float deltaSpaceY = spaceMouse.transform.localEulerAngles.y;
 
-            //Debug.Log("deltay: " + deltaSpaceY);
 
             if (spaceMouse.transform.localEulerAngles.y < 10f)
                 deltaSpaceY = 0;
@@ -125,7 +120,6 @@ public class InstrumentBehaviour : MonoBehaviour {
                 deltaSpaceY = spaceMouse.transform.localEulerAngles.y - 360f;
 
             maxVolumne = Mathf.Max(Mathf.Min(maxVolumne + maxVolumne * (-deltaSpaceY / 360f) * Time.deltaTime, 1.0f), 0.2f);
-            Debug.Log("maxVolume:" + maxVolumne);
         }
     }
     private void Andante()
@@ -176,20 +170,23 @@ public class InstrumentBehaviour : MonoBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
-                selected = !selected;
+				controlVolumeSelected = !controlVolumeSelected;
             }
         }
     }
 
     private void ApplyIncrementalDecline()
     {
-        if (playState && audioSource)
+        if (audioSource)
         {
             if (audioSource.volume > 0.0f)
             {
-                audioSource.volume -= Mathf.Max(0.0f, incrementalDecline * Time.deltaTime);
+				if(dirigentAtInstrument) {
+					audioSource.volume -= Mathf.Max(0.0f, incrementalDecline * Time.deltaTime * 2);					
+				} else {
+                	audioSource.volume -= Mathf.Max(0.0f, incrementalDecline * Time.deltaTime);
+				}
             }
-            Debug.Log("Music is now on volume: " + audioSource.volume);
         }
         if(audioSource.volume == 0.0f)
         {
@@ -226,7 +223,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 
     public void Stop()
     {
-        audioSource.Play();
+        audioSource.Stop();
         instrumentAnimation.enabled = false;
     }
 
