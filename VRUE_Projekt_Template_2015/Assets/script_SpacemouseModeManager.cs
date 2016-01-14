@@ -17,12 +17,22 @@ public class script_SpacemouseModeManager : MonoBehaviour {
     public GameObject gameObjectSpaceMouse;
     public GameObject gameObjectPult;
 
+
+
+    GameObject spaceMouse;
+    GameObject tracker;
+
+    GameObject avatar;
+    public Transform prefab;
+
+
     bool controlConductor;
 
-    
+    public bool isAvatarInstantiated;
     // Use this for initialization
 	void Start () {
         controlConductor = false;
+        isAvatarInstantiated = false;
 	}
 	
     void init()
@@ -36,15 +46,39 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         if (controlConductor)
             return;
 
-        //change spawntest please
-        this.gameObjectConductor = GameObject.Find("SpawnTest");
-        this.gameObjectSpaceMouse = GameObject.Find("Spacemouse");
 
-        GameObject tracker = GameObject.Find("TrackingCamera");
-        GameObject spaceMouse = tracker.transform.Find("Spacemouse").gameObject;
-        tracker = spaceMouse.transform.Find("TrackerObject").gameObject;
+
+        if (!isAvatarInstantiated)
+        {
+            //change spawntest please
+            this.gameObjectConductor = GameObject.Find("SpawnTest");
+            this.gameObjectSpaceMouse = GameObject.Find("Spacemouse");
+
+            tracker = GameObject.Find("TrackingCamera");
+            spaceMouse = tracker.transform.Find("Spacemouse").gameObject;
+            tracker = spaceMouse.transform.Find("TrackerObject").gameObject;
+
+            avatar = (GameObject)Network.Instantiate(prefab, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+
+
+
+            spaceMouse.transform.position = new Vector3(0f, 0f, 0f);
+            spaceMouse.transform.localPosition = new Vector3(0f, 0f, 0f);
+
+            tracker.transform.position = new Vector3(0f, 0f, 0f);
+            tracker.transform.position = new Vector3(0f, 0f, 0f);
+
+            
+            
+            ExchangeParentStructure(avatar, gameObjectConductor);
+
+            isAvatarInstantiated = true;
+
+        }
 
         spaceMouse.SetActive(true);
+
+
 
         //gameObjectConductor.transform.parent = tracker.transform;
 
@@ -69,7 +103,6 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         this.ExchangeParentStructure(gameObjectConductor, gameObjectPult);
     }
 
-    
     public void ExchangeParentStructure(GameObject newChild, GameObject newParent)
     {
 
