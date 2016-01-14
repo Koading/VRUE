@@ -52,10 +52,10 @@ public class HomerInteraction : ObjectSelectionBase
 	/// </summary>
 	public void Start()
 	{
-		tracker = GameObject.Find("TrackerObject");
 		torso = GameObject.Find ("RigSpine3");
         physicalHand = tracker;//GameObject.Find ("PhysicalHand");
 
+        tracker = tracker.transform.FindChild("TrackerObject").gameObject;
 		// remove this as soon as GUI is ready
 		lineRenderer = this.gameObject.AddComponent<LineRenderer> ();
 		
