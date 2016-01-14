@@ -20,7 +20,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
 
     GameObject spaceMouse;
-    GameObject tracker;
+    public GameObject tracker;
 
     GameObject avatar;
     public Transform prefab;
@@ -51,17 +51,17 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         if (!isAvatarInstantiated)
         {
             //change spawntest please
-            this.gameObjectConductor = GameObject.Find("SpawnTest");
+            this.gameObjectConductor = GameObject.Find("Pult");
             this.gameObjectSpaceMouse = GameObject.Find("Spacemouse");
 
             tracker = GameObject.Find("TrackingCamera");
             spaceMouse = tracker.transform.Find("Spacemouse").gameObject;
             tracker = spaceMouse.transform.Find("TrackerObject").gameObject;
 
-            avatar = (GameObject)Network.Instantiate(prefab, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+            avatar = ((Transform)Network.Instantiate(prefab, new Vector3(0f, 0f, 0f), Quaternion.identity, 0)).gameObject;
 
 
-
+            
             spaceMouse.transform.position = new Vector3(0f, 0f, 0f);
             spaceMouse.transform.localPosition = new Vector3(0f, 0f, 0f);
 
@@ -69,9 +69,6 @@ public class script_SpacemouseModeManager : MonoBehaviour {
             tracker.transform.position = new Vector3(0f, 0f, 0f);
 
             
-            
-            ExchangeParentStructure(avatar, gameObjectConductor);
-
             isAvatarInstantiated = true;
 
         }
@@ -94,6 +91,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
 
         //OnClickResetConductor();
+        avatar.transform.parent = gameObjectPult.transform;
 
         controlConductor = false;
     }
@@ -102,14 +100,13 @@ public class script_SpacemouseModeManager : MonoBehaviour {
     {
         gameObjectPult = GameObject.Find("Pult");
 
-
         this.ExchangeParentStructure(avatar, gameObjectPult);
     }
 
     public void ExchangeParentStructure(GameObject newChild, GameObject newParent)
     {
 
-        Debug.Log("Exchanging");
+        Debug.Log("Exchanging " + newChild.name + " with parent: " + newParent.name);
         newChild.transform.position = new Vector3(0f, 0f, 0f);
         newChild.transform.localPosition = new Vector3(0f, 0f, 0f);
         //object1.transform.position = new Vector3(0f, 0f, 0f);
