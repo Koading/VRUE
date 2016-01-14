@@ -33,11 +33,11 @@
 			<descriptor>right wrist</descriptor>
 			<descriptor>to the left</descriptor>
 			<descriptor>at least</descriptor>
-			<descriptor>4</descriptor>
+			<descriptor>20</descriptor>
 			<descriptor>cm/sec</descriptor>
 		</input>
 		<input type="4">
-			<descriptor>0</descriptor>
+			<descriptor>0,1</descriptor>
 			<descriptor>1</descriptor>
 			<descriptor>starts</descriptor>
 		</input>
@@ -45,23 +45,23 @@
 			<descriptor>right wrist</descriptor>
 			<descriptor>up</descriptor>
 			<descriptor>at least</descriptor>
-			<descriptor>4</descriptor>
+			<descriptor>20</descriptor>
 			<descriptor>cm/sec</descriptor>
-		</input>
-		<input type="4">
-			<descriptor>0</descriptor>
-			<descriptor>1</descriptor>
-			<descriptor>starts</descriptor>
 		</input>
 		<input type="3">
 			<descriptor>right wrist</descriptor>
 			<descriptor>to the right</descriptor>
 			<descriptor>at least</descriptor>
-			<descriptor>4</descriptor>
+			<descriptor>20</descriptor>
 			<descriptor>cm/sec</descriptor>
 		</input>
 		<input type="4">
-			<descriptor>0</descriptor>
+			<descriptor>0,1</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0,1</descriptor>
 			<descriptor>1</descriptor>
 			<descriptor>starts</descriptor>
 		</input>
@@ -69,7 +69,7 @@
 			<descriptor>right wrist</descriptor>
 			<descriptor>down</descriptor>
 			<descriptor>at least</descriptor>
-			<descriptor>4</descriptor>
+			<descriptor>20</descriptor>
 			<descriptor>cm/sec</descriptor>
 		</input>
 		<output type="0">
@@ -124,15 +124,31 @@
 		</output>
 	</gesture>
 	<gesture name="playGuitar" timeout="0">
+		<input type="1">
+			<descriptor>left hand</descriptor>
+			<descriptor>to the left of</descriptor>
+			<descriptor>torso</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>20</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
+		<input type="1">
+			<descriptor>left hand</descriptor>
+			<descriptor>below</descriptor>
+			<descriptor>neck</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>20</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
 		<input type="3">
 			<descriptor>right wrist</descriptor>
 			<descriptor>down</descriptor>
 			<descriptor>at least</descriptor>
-			<descriptor>4</descriptor>
+			<descriptor>40</descriptor>
 			<descriptor>cm/sec</descriptor>
 		</input>
 		<input type="4">
-			<descriptor>0</descriptor>
+			<descriptor>0,2</descriptor>
 			<descriptor>1</descriptor>
 			<descriptor>starts</descriptor>
 		</input>
@@ -140,12 +156,108 @@
 			<descriptor>right wrist</descriptor>
 			<descriptor>up</descriptor>
 			<descriptor>at least</descriptor>
-			<descriptor>4</descriptor>
+			<descriptor>40</descriptor>
 			<descriptor>cm/sec</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0,2</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
 		</input>
 		<output type="0">
 			<descriptor>press</descriptor>
 			<descriptor>g</descriptor>
+			<descriptor>for</descriptor>
+			<descriptor>0</descriptor>
+		</output>
+	</gesture>
+	<gesture name="playViolin" timeout="0">
+		<input type="1">
+			<descriptor>left hand</descriptor>
+			<descriptor>to the left of</descriptor>
+			<descriptor>head</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>0</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
+		<input type="1">
+			<descriptor>left hand</descriptor>
+			<descriptor>above</descriptor>
+			<descriptor>neck</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>0</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
+		<input type="1">
+			<descriptor>right hand</descriptor>
+			<descriptor>to the right of</descriptor>
+			<descriptor>neck</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>20</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
+		<input type="3">
+			<descriptor>right hand</descriptor>
+			<descriptor>to the left</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>10</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0</descriptor>
+			<descriptor>0,6</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="3">
+			<descriptor>right hand</descriptor>
+			<descriptor>to the right</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>10</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<output type="0">
+			<descriptor>press</descriptor>
+			<descriptor>v</descriptor>
+			<descriptor>for</descriptor>
+			<descriptor>0</descriptor>
+		</output>
+	</gesture>
+	<gesture name="playDrums" timeout="0.3">
+		<input type="1">
+			<descriptor>right hand</descriptor>
+			<descriptor>to the right of</descriptor>
+			<descriptor>head</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>10</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0,1</descriptor>
+			<descriptor>0,5</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="3">
+			<descriptor>right hand</descriptor>
+			<descriptor>down</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>35</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0,1</descriptor>
+			<descriptor>0,5</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="3">
+			<descriptor>right hand</descriptor>
+			<descriptor>up</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>35</descriptor>
+			<descriptor>cm/sec</descriptor>
+		</input>
+		<output type="0">
+			<descriptor>press</descriptor>
+			<descriptor>d</descriptor>
 			<descriptor>for</descriptor>
 			<descriptor>0</descriptor>
 		</output>
