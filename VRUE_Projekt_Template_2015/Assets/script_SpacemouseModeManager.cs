@@ -59,14 +59,10 @@ public class script_SpacemouseModeManager : MonoBehaviour {
             tracker = spaceMouse.transform.Find("TrackerObject").gameObject;
 
             avatar = ((Transform)Network.Instantiate(prefab, new Vector3(0f, 0f, 0f), Quaternion.identity, 0)).gameObject;
+            //avatar.transform.Find("VirtualHand").GetComponent<MeshRenderer>().enabled = true;
 
-
-            
-            spaceMouse.transform.position = new Vector3(0f, 0f, 0f);
-            spaceMouse.transform.localPosition = new Vector3(0f, 0f, 0f);
-
-            tracker.transform.position = new Vector3(0f, 0f, 0f);
-            tracker.transform.position = new Vector3(0f, 0f, 0f);
+            avatar.transform.localPosition = new Vector3(0f, 0f, 0f);
+            avatar.transform.position = new Vector3(0f, 0f, 0f);
 
             
             isAvatarInstantiated = true;
@@ -76,6 +72,18 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         spaceMouse.SetActive(true);
 
 
+
+        /*
+        spaceMouse.transform.position = new Vector3(0f, 0f, 0f);
+        spaceMouse.transform.localPosition = new Vector3(0f, 0f, 0f);
+
+        tracker.transform.position = new Vector3(0f, 0f, 0f);
+        tracker.transform.position = new Vector3(0f, 0f, 0f);
+        */
+
+        spaceMouse.transform.position = avatar.transform.position;
+
+        tracker.transform.position = avatar.transform.position;
 
         //gameObjectConductor.transform.parent = tracker.transform;
 
@@ -93,6 +101,8 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         //OnClickResetConductor();
         avatar.transform.parent = gameObjectPult.transform;
 
+
+
         controlConductor = false;
     }
 
@@ -103,6 +113,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         this.ExchangeParentStructure(avatar, gameObjectPult);
     }
 
+    [RPC]
     public void ExchangeParentStructure(GameObject newChild, GameObject newParent)
     {
 
