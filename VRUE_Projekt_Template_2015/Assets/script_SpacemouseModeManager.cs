@@ -82,7 +82,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
         //gameObjectConductor.transform.parent = tracker.transform;
 
-        ExchangeParentStructure(gameObjectConductor, tracker);
+        ExchangeParentStructure(avatar, tracker);
 
         controlConductor = true;
     }
@@ -92,6 +92,9 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         if (!controlConductor)
             return;
 
+
+        //OnClickResetConductor();
+
         controlConductor = false;
     }
 
@@ -100,7 +103,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         gameObjectPult = GameObject.Find("Pult");
 
 
-        this.ExchangeParentStructure(gameObjectConductor, gameObjectPult);
+        this.ExchangeParentStructure(avatar, gameObjectPult);
     }
 
     public void ExchangeParentStructure(GameObject newChild, GameObject newParent)
