@@ -5,7 +5,7 @@ public class RecordingManager : MonoBehaviour {
 
 
     List<Recording> recordings;
-    bool playAll;
+    public bool playAll;
 
 	// Use this for initialization
 	void Start () {
@@ -19,10 +19,20 @@ public class RecordingManager : MonoBehaviour {
         {
             foreach (Recording r in this.recordings)
             {
-
+                r.Update();
             }
         }
 	}
+
+    public void ClearRecordings()
+    {
+        foreach (Recording r in this.recordings)
+        {
+            r.Stop();
+        }
+        recordings.Clear();
+
+    }
 
     public class Recording
     {
@@ -41,16 +51,45 @@ public class RecordingManager : MonoBehaviour {
         {
             this.instrument = instrument;
             this.audioSource = instrument.gameObject.GetComponent<AudioSource>();
+            playEnd = -1;
+            playStart = -1;
         }
 
         public void PlayRecording()
         {
+            instrument.audioSource.Play();
+            instrument.audioSource.time = playStart;
+        }
+
+        public void Stop()
+        {
+            instrument.audioSource.Stop();
+            
         }
 
         public void RecordingStart()
         {
             if (audioSource)
             {
+                this.playStart = audioSource.time;
+            }
+        }
+
+        public void RecordingEnd()
+        {
+
+            if (audioSource)
+                this.playEnd = audioSource.time;
+        }
+
+        public void Update()
+        {
+            if(audioSource && playStart > 0 && playEnd > 0)
+            {
+                if (audioSource.time > playEnd)
+                {
+                    audioSource.time = playStart;
+                }
             }
         }
     }
