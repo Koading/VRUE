@@ -25,7 +25,7 @@ public class script_InstrumentPoolManager : MonoBehaviour {
 		InstrumentBehaviour[] instruments = this.gameObject.GetComponentsInChildren<InstrumentBehaviour> ();
 
 		foreach (InstrumentBehaviour instrument in instruments) {
-			instrument.Stop();
+			instrument.Stop(instrument.networkView.viewID, new NetworkMessageInfo());
 		}
 	}
 

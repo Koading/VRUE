@@ -42,4 +42,10 @@ public class AudienceBehaviour : MonoBehaviour {
         }
 	}
 
+    [RPC]
+    public void Animate()
+    {
+
+    }
+
 }

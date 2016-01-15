@@ -26,7 +26,6 @@ public class RecordingManager : MonoBehaviour {
 
     public class Recording
     {
-
         InstrumentBehaviour instrument;
         float playStart;
         float playEnd;
@@ -41,23 +40,18 @@ public class RecordingManager : MonoBehaviour {
         public Recording(InstrumentBehaviour instrument)
         {
             this.instrument = instrument;
-
             this.audioSource = instrument.gameObject.GetComponent<AudioSource>();
         }
 
         public void PlayRecording()
         {
-            
         }
 
         public void RecordingStart()
         {
             if (audioSource)
             {
-                
             }
         }
-
     }
-
 }

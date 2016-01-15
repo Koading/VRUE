@@ -35,17 +35,14 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
     
     public void OnClick()
     {
-        Debug.Log("Button instantiate prefab clicked");
 
         //
         if(prefab)
         {
 
-            Debug.Log("Prefab existing");
             if (this.tracker.transform.childCount == 0)
             {
 
-                Debug.Log("instantiating");
 
                 //change to instantiate over network: ask for client, do for server
                 /*
@@ -63,6 +60,8 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
                 }
                 */
                 instantiatedPrefab = (GameObject) Network.Instantiate(prefab, new Vector3(0f,0f,0f), Quaternion.identity, 0);
+
+                
                 //instantiatedPrefab = (GameObject)GameObject.Instantiate(prefab, new Vector3(0f,0f,0f),Quaternion.identity);
                 Debug.Log(instantiatedPrefab);
 

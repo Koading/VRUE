@@ -29,8 +29,9 @@ public class InstrumentBehaviour : MonoBehaviour {
 
 	
 	public bool dirigentAtInstrument = false;
-		
-	
+
+
+    public NetworkViewID viewID;	
 
 	void OnGui()
 	{
@@ -42,8 +43,6 @@ public class InstrumentBehaviour : MonoBehaviour {
 		Debug.Log ("OnGUI call");
 	}
 
-
-
 	void Start () {
         Debug.Log("InstrumentBehaviour Start");
 
@@ -52,6 +51,8 @@ public class InstrumentBehaviour : MonoBehaviour {
 		maxVolumne = audioSource.volume;
 
         spaceMouse = GameObject.Find("Spacemouse");
+        
+        this.viewID = this.gameObject.GetComponent<NetworkView>().viewID;
 	}
 	
 	// Update is called once per frame
@@ -70,33 +71,17 @@ public class InstrumentBehaviour : MonoBehaviour {
 		
 
         ApplyIncrementalDecline();
-        
-        //TODO: Take the idea and make it better.
-        //this crashes because there is no renderer attached to the parent gameobject.
-        //oldPostionY = spaceMouse.transform.localEulerAngles.y;
-        /*
-		if (this.selected) {
-			//TODO: let both users see the instrument as selected
-			this.gameObject.renderer.material.SetColor("_Color", Color.blue);
-		} else {
-			this.gameObject.renderer.material.SetColor("_Color", Color.white);
-		}
-        */
 
 	}
 
 	protected void playInstrument () {
-		if (audioSource) { 
-			
-			if (!audioSource.loop)
-			{
-				audioSource.loop = true;
-				this.Play();
-			}
+		if (audioSource) {
+
+            this.Play(this.viewID, new NetworkMessageInfo());
 			
 			if (audioSource.volume < 0.1f)
 			{
-				this.Stop();
+                this.Stop(this.viewID, new NetworkMessageInfo());
 			}
 			
 			audioSource.volume += (float)(maxVolumne / 10.0);
@@ -113,7 +98,6 @@ public class InstrumentBehaviour : MonoBehaviour {
         {
             float deltaSpaceY = spaceMouse.transform.localEulerAngles.y;
 
-
             if (spaceMouse.transform.localEulerAngles.y < 10f)
                 deltaSpaceY = 0;
             if (spaceMouse.transform.localEulerAngles.y >= 180f)
@@ -124,20 +108,15 @@ public class InstrumentBehaviour : MonoBehaviour {
     }
     private void Andante()
     {
-	    if (playState && audioSource) { 
-     
-            if (!audioSource.loop)
-            {
-                audioSource.loop = true;
-                //audioSource.Play ();
-                this.Play();
-            }
+	    if (playState && audioSource) {
+
+            this.Play(this.viewID, new NetworkMessageInfo());
 
             if (audioSource.volume < 0.1f)
             {
                 //audioSource.Stop();
                 //audioSource.Play(); //????????????? wtf is this doing here?
-                this.Stop();
+                this.Stop(this.viewID, new NetworkMessageInfo());
             }
 
             audioSource.volume = maxVolumne;
@@ -156,7 +135,7 @@ public class InstrumentBehaviour : MonoBehaviour {
                 {
                     //audioSource.Stop();
                     //instrumentAnimation.enabled = false;
-                    this.Stop();
+                    this.Stop(this.viewID, new NetworkMessageInfo());
                 }
                 else
                 {
@@ -190,23 +169,38 @@ public class InstrumentBehaviour : MonoBehaviour {
         }
         if(audioSource.volume == 0.0f)
         {
-            Stop();
+            Stop(this.viewID, new NetworkMessageInfo());
         }
     }
 
     //TODO call this from kinect functions
     public void OnKinectTriggerStart()
     {
-		Debug.Log ("OnKinect Enter");
-		this.selected = true;
+        select(this.viewID, new NetworkMessageInfo());
     }
 
     public void OnKinectTriggerStop()
 	{
-		Debug.Log ("OnKinect Leave");
-		alreadyChangedState = false;
-		this.selected = false;
+        unselect(this.viewID, new NetworkMessageInfo());
+    }
 
+    [RPC]
+    public void select(NetworkViewID viewID, NetworkMessageInfo info)
+    {
+        Debug.Log("OnKinect Enter");
+        this.selected = true;
+
+        this.StartHighlight();
+    }
+
+    [RPC]
+    public void unselect(NetworkViewID viewID, NetworkMessageInfo info)
+    {
+        Debug.Log("OnKinect Leave");
+        alreadyChangedState = false;
+        this.selected = false;
+
+        this.StopHighlight();
     }
 
     public bool isPlaying()
@@ -214,18 +208,45 @@ public class InstrumentBehaviour : MonoBehaviour {
         return playState;
     }
 
-    private void Play()
+    [RPC]
+    private void Play(NetworkViewID viewID, NetworkMessageInfo info)
     {
-        audioSource.Play();
-        instrumentAnimation.enabled = true;
+        if(!audioSource.isPlaying)
+        { 
+            audioSource.Play();
+            audioSource.loop = false;
+            instrumentAnimation.enabled = true;
+        }
     }
 
-
-    public void Stop()
+    [RPC]
+    public void Stop(NetworkViewID viewID, NetworkMessageInfo info)
     {
-        audioSource.Stop();
-        instrumentAnimation.enabled = false;
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            audioSource.loop = false;
+            instrumentAnimation.enabled = false;
+        }
     }
 
+    public void StartHighlight()
+    {
 
+    }
+
+    public void StopHighlight()
+    {
+
+    }
+
+    [RPC]
+    public void MoveToPool()
+    {
+        Debug.Log("Fixating instrument");
+
+        GameObject instrumentPool = GameObject.Find("Active Instrument Pool");
+
+        this.gameObject.transform.parent = instrumentPool.transform;   
+    }
 }

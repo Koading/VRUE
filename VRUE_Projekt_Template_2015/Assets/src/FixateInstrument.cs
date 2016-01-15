@@ -6,7 +6,8 @@ public class FixateInstrument : MonoBehaviour {
 
     public GameObject tracker;
     Button button;
-    
+    public GameObject instrumentPool;
+
     // Use this for initialization
 	void Start () {
         if(!tracker)
@@ -14,6 +15,8 @@ public class FixateInstrument : MonoBehaviour {
         
         button = this.GetComponent<Button>();
         button.onClick.AddListener(this.OnClick);
+
+        instrumentPool = GameObject.Find("Active Instrument Pool");
 	}
 
     private void OnClick()
@@ -24,11 +27,14 @@ public class FixateInstrument : MonoBehaviour {
 
             if(tracker.transform.childCount > 0)
             {
-                Debug.Log("Fixating instrument");
-
+                
                 Transform obj = (Transform) tracker.transform.GetChild(0);
-                obj.parent = GameObject.Find("Active Instrument Pool").transform;
 
+                InstrumentBehaviour instrument = obj.GetComponent<InstrumentBehaviour>();
+
+                //instrument.MoveToPool(instrument.viewID, new NetworkMessageInfo());
+                instrument.MoveToPool();
+                
 
                 //assign instrument to random audience member
                 int numAudience = GameObject.Find("Audience").transform.childCount;
@@ -48,6 +54,8 @@ public class FixateInstrument : MonoBehaviour {
                     {
                         AudienceBehaviour ab = visitor.GetComponent<AudienceBehaviour>();
 
+                        //TODO move this to AudienceBehaviour, make RPC, check if it works
+
                         Debug.Log(visitor);
                         Debug.Log(ab);
 
@@ -63,4 +71,5 @@ public class FixateInstrument : MonoBehaviour {
             }
         }
     }
+    
 }
