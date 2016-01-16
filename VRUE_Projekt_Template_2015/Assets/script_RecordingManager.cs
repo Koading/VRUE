@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class RecordingManager : MonoBehaviour {
+public class RecordingManager : MonoBehaviour
+{
 
 
     List<Recording> recordings;
     public bool playAll;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         recordings = new List<Recording>();
         playAll = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (this.playAll)
         {
             foreach (Recording r in this.recordings)
@@ -22,7 +25,7 @@ public class RecordingManager : MonoBehaviour {
                 r.Update();
             }
         }
-	}
+    }
 
     public void ClearRecordings()
     {
@@ -44,7 +47,7 @@ public class RecordingManager : MonoBehaviour {
 
         private Recording()
         {
-            
+
         }
 
         public Recording(InstrumentBehaviour instrument)
@@ -64,7 +67,7 @@ public class RecordingManager : MonoBehaviour {
         public void Stop()
         {
             instrument.audioSource.Stop();
-            
+
         }
 
         public void RecordingStart()
@@ -84,7 +87,7 @@ public class RecordingManager : MonoBehaviour {
 
         public void Update()
         {
-            if(audioSource && playStart > 0 && playEnd > 0)
+            if (audioSource && playStart > 0 && playEnd > 0)
             {
                 if (audioSource.time > playEnd)
                 {
