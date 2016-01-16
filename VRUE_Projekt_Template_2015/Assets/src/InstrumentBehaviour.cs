@@ -53,6 +53,9 @@ public class InstrumentBehaviour : MonoBehaviour {
         spaceMouse = GameObject.Find("Spacemouse");
         
         this.viewID = this.gameObject.GetComponent<NetworkView>().viewID;
+
+        //GameObject parentSpace = GameObject.Find("Active Instrument Pool");
+        //this.transform.parent = parentSpace.transform;
 	}
 	
 	// Update is called once per frame
