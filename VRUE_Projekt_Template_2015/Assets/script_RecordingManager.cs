@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RecordingManager : MonoBehaviour
+public class script_RecordingManager : MonoBehaviour
 {
     private ArrayList recordings;
     public bool playAll;
@@ -34,12 +34,35 @@ public class RecordingManager : MonoBehaviour
         recordings.Clear();
     }
 
-    void OnClickPlayAll()
+    public void OnClickPlayAll()
     {
         this.playAll = true;
+
+        foreach(Recording r in this.recordings)
+        {
+            r.PlayRecording();
+        }
     }
 
-    void OnCickStopAll()
+    public void OnClickRecord()
+    {
+        GameObject instrumentPool = GameObject.Find("Active Instrument Pool");
+        Object[] instruments = instrumentPool.GetComponentsInChildren<InstrumentBehaviour>(false);
+        foreach(InstrumentBehaviour instrument in instruments)
+        {
+
+            Debug.Log("create recording");
+            Recording rec = new Recording(instrument);
+
+            rec.playStart= 10;
+            rec.playEnd = 20;
+            rec.volume = 1.0f;
+
+            this.recordings.Add(rec);
+        }
+    }
+
+    public void OnCickStopAll()
     {
         this.playAll = false;
         this.ClearRecordings();

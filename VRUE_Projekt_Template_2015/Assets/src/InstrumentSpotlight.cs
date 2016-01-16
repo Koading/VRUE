@@ -8,7 +8,7 @@ using System.Collections;
         public GameObject instrument;
          Light spotlightComponent;
 
-        NetworkView networkView;
+        //NetworkView networkView;
         ObjectController ObjectController;
 
         public void Start()

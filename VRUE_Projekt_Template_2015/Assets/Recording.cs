@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class Recording
 {
     InstrumentBehaviour instrument;
-    float playStart;
-    float playEnd;
-    float volume;
+    public float playStart;
+    public float playEnd;
+    public float volume;
     AudioSource audioSource;
 
     private Recording()
@@ -25,6 +25,7 @@ public class Recording
 
     public void PlayRecording()
     {
+        instrument.audioSource.volume = this.volume;
         instrument.audioSource.Play();
         instrument.audioSource.time = playStart;
     }
