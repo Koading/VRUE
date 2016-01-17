@@ -84,6 +84,7 @@ public class NetworkBase : MonoBehaviour {
     void OnServerInitialized()
     {
         Debug.Log("OnServerInitialized: "+Network.player.ipAddress+":"+Network.player.port);
+		GameObject.Find ("TrackingCamera").transform.FindChild("TrackLeftHand").gameObject.SetActive (true);
     }
 
     /// <summary>
@@ -116,6 +117,7 @@ public class NetworkBase : MonoBehaviour {
 	void OnConnectedToServer()
     {
         Debug.Log("OnConnectedToServer()");
+		GameObject.Find ("TrackingCamera").transform.FindChild("Spacemouse").gameObject.SetActive (true);
     }
 
     /// <summary>
