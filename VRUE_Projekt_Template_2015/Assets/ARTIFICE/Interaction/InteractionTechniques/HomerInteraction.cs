@@ -58,6 +58,7 @@ public class HomerInteraction : ObjectSelectionBase
 
         tracker = tracker.transform.FindChild("TrackerObject").gameObject;
 
+		lineRenderer = this.gameObject.GetComponent<LineRenderer> ();
 
 		Debug.Log("Start Homer");
 	}
@@ -209,14 +210,12 @@ public class HomerInteraction : ObjectSelectionBase
 	
 	
 	public void onEnable() {
-		lineRenderer = this.gameObject.AddComponent<LineRenderer> ();
-		
-		lineRenderer.SetWidth (0.02f, 0.02f);
+		lineRenderer.enabled = true;
 	
 	}
 
 	public void onDisabled() {
-		Destroy (lineRenderer);
+		lineRenderer.enabled = false;
 	}
 
 

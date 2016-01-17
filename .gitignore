@@ -5,6 +5,10 @@ VRUE_Projekt_Template_2015/obj
 VRUE_Projekt_Template_2015/Temp
 VRUE_Projekt_Template_2015/build_Data
 VRUE_Projekt_Template_2015/Library
+VRUE_Projekt_Template_2015/ProjectSettings
+*.xml
+*.cal
+*.userprefs
 *.exe
 *.csproj
 *.sln
