@@ -90,12 +90,12 @@ public class HomerInteraction : ObjectSelectionBase
 
 					// show virtual hand -> physical hand is autmatically rendert due to tracking state
 					tracker.transform.parent.GetComponent<TrackBase>().setVisability(gameObject, true);
-					this.transform.rotation = tracker.transform.rotation;					
-
+					this.transform.rotation = tracker.transform.rotation;
+					this.transform.position = tracker.transform.position;					
+					
 
 					if(lineRenderer && !selected) {
 						//Update transform of the selector object (virtual hand)
-						this.transform.position = tracker.transform.position;
 						lineRenderer.SetPosition (0, physicalHand.transform.position);
 						lineRenderer.SetPosition (1, (physicalHand.transform.position - torso.transform.position ).normalized * 99999 + physicalHand.transform.position);
 						ArrayList removableCollidees = new ArrayList();							

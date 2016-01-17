@@ -41,6 +41,7 @@ public class Recording
         if (audioSource)
         {
             this.playStart = audioSource.time;
+			this.volume = audioSource.volume;
         }
     }
 
