@@ -29,6 +29,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 
 	
 	public bool dirigentAtInstrument = false;
+	public bool dirigentAtPult = false;
 
 
     public NetworkViewID viewID;	
@@ -63,7 +64,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 
         ControlMaxVolume();
 
-		if (!dirigentAtInstrument) {
+		if (dirigentAtPult) {
 			if (Input.GetKeyDown (KeyCode.W)) {
 				CommandInstrument ();
 			}
