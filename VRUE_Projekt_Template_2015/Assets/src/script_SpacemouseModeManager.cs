@@ -67,13 +67,12 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 			virtualHand.transform.parent = virtualHand.transform;
 			virtualHand.transform.localRotation = Quaternion.identity;
 			virtualHand.transform.localPosition = Vector3.zero;
-
+			virtualHand.GetComponent<HomerInteraction>().enabled = true;
             
             isAvatarInstantiated = true;
 
-        }
+		}
 
-        spaceMouse.SetActive(true);
 
 
 

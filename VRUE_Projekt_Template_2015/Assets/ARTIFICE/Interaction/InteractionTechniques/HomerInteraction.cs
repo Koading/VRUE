@@ -57,12 +57,7 @@ public class HomerInteraction : ObjectSelectionBase
         physicalHand = tracker;//GameObject.Find ("PhysicalHand");
 
         tracker = tracker.transform.FindChild("TrackerObject").gameObject;
-		// remove this as soon as GUI is ready
-		lineRenderer = this.gameObject.AddComponent<LineRenderer> ();
-		
-		lineRenderer.SetWidth (0.02f, 0.02f);
 
-		//////////////////////
 
 		Debug.Log("Start Homer");
 	}
@@ -72,9 +67,12 @@ public class HomerInteraction : ObjectSelectionBase
 	/// </summary>
 	protected override void UpdateSelect()
 	{
+		if (!torso) {
+			torso = GameObject.Find("RigSpine3");
+		}
 
 
-		if(tracker)
+		if(tracker && torso)
 		{
 			// INTERACTION TECHNIQUE THINGS ------------------------------------------------
 			if (tracker.transform.parent.GetComponent<TrackBase>().isTracked())
