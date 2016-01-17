@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 public class InstrumentBehaviour : MonoBehaviour {
 
 
@@ -31,7 +31,11 @@ public class InstrumentBehaviour : MonoBehaviour {
 	public bool dirigentAtInstrument = false;
 
 
-    public NetworkViewID viewID;	
+    public NetworkViewID viewID;
+
+    public float colorOffset = 0.3f; // aims to change colorbrightness by 10% when selected
+
+    private bool highlighted;
 
 	void OnGui()
 	{
@@ -56,6 +60,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 
         //GameObject parentSpace = GameObject.Find("Active Instrument Pool");
         //this.transform.parent = parentSpace.transform;
+        highlighted = false;
 	}
 	
 	// Update is called once per frame
@@ -155,6 +160,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 				controlVolumeSelected = !controlVolumeSelected;
             }
         }
+
     }
 
     private void ApplyIncrementalDecline()
@@ -235,12 +241,75 @@ public class InstrumentBehaviour : MonoBehaviour {
 
     public void StartHighlight()
     {
+        if (this.highlighted)
+            return;
+        
+        int childCount = this.gameObject.transform.childCount;
 
+        for (int i = 0; i < childCount; i++)
+        {
+            Debug.Log(this.gameObject.transform.GetChild(i));
+            Transform go = this.gameObject.transform.GetChild(i);
+            Debug.Log(go.renderer.materials.Length);
+
+            if (!go.renderer)
+                break;
+
+
+            int colorCount = go.renderer.materials.Length;
+
+            for (int y = 0; y < colorCount; y++)
+            {
+                Color color = go.renderer.materials[y].color;
+                color.r += this.colorOffset;
+                go.renderer.materials[y].color = color;
+            }
+        }
+         
     }
 
     public void StopHighlight()
     {
+        if (!this.highlighted)
+            return;
+        int childCount = this.gameObject.transform.childCount;
 
+        for (int i = 0; i < childCount; i++)
+        {
+            Debug.Log(this.gameObject.transform.GetChild(i));
+            Transform go = this.gameObject.transform.GetChild(i);
+            Debug.Log(go.renderer.materials.Length);
+
+            if (!go.renderer)
+                break;
+
+            int colorCount = go.renderer.materials.Length;
+
+            for (int y = 0; y < colorCount; y++)
+            {
+                Color color = go.renderer.materials[y].color;
+                color.r -= this.colorOffset;
+                go.renderer.materials[y].color = color;
+            }
+        }
+
+        /*
+        int childCount = this.gameObject.transform.childCount;
+
+        for (int i = 0; i < childCount; i++)
+        {
+            Debug.Log(this.gameObject.transform.GetChild(i));
+            Transform go = this.gameObject.transform.GetChild(i);
+            Debug.Log(go.renderer.materials.Length);
+
+
+            
+            if(go.renderer.materials[go.renderer.materials.Length - 1].name == "Outline")
+            {
+
+            }
+        }
+         */
     }
 
     [RPC]
