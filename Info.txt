@@ -8,13 +8,26 @@ Beschreibung:
 		Cheats (zur demonstration eines recordings, da dies etwas tricky ist)
 		
 	
-	Zur verfügung stehen 5 Instrumente: Drums, Violine, Trompete, Xylophon und Gitarre. Zusätzlich Lautsprecher, die haben aber außer zum spawnen keine weitere verwendung
+		
+	Der Kinekt Useravatar wird per Buttons gespawned und gesteuert. Um den Avatar zu spawnen, muss der Spacemoususer erst "Control Conductor" drücken. 
+	Nachdem der Spacemouseuser <control conductor> gedrückt hat, kann er diesen per Spacemouse bewegen und irgendwo in die Szene setzen. Mit "
+	Beim Spawnen ist dies der Instrumentenmodus. Um den Dirigenten ins pult und in den Pultmodus zu setzen muss der Spacemouseuser <reset conductor> drücken.
+	
+	
+	Das Orchester besteht aus elementen mit zusammenpassenden audioschnitten.
+	
+Features
+	Zur verfügung stehen 5 Instrumente: Drums, Violine, Trompete, Xylophon und Gitarre. 
+	Zusätzlich Lautsprecher, die haben aber außer zum spawnen keine weitere verwendung
+	
 	Beim spawnen der Instrumente wird ein Spotlight gespawned, dass die Instrumente verfolgt. Die Farbe der Spotlights wird zufällig gewählt, daher kommt es vor, dass die spotlights kaum sichtbar sind
-	Jedes Instrument hat eine Anzeige für die Lautstärke
 	
+	Jedes Instrument hat eine Anzeige für die Lautstärke. Nach dem abspielen wird die musik nach und nach leiser. Der dirigent kann die instrumente mit gesten wieder lauter machen (andante)
 	
-	Der Kinekt wird per Buttons gespawned und gesteuert. Um den Avatar zu spawnen, muss der Spacemoususer erst "Control Conductor" drücken. 
-	Nachdem der Spacemouseuser control conductor gedrückt hat, kann er diesen per Spacemouse bewegen und irgendwo in die Szene setzen
-	Default mäßig ist dies der Instrumentenmodus. Um den Dirigenten ins pult und in den Pultmodus zu setzen muss der Spacemouseuser reset conductor drücken.
+	Beim Selektieren des Instruments (HOMER technik) werden die Farben des Instrumentes aufgehellt. 
 	
+	Beim abspielen erhält das instrument eine animation.
 	
+	Beim abspielen der Instrumente wird zufällig ein Zuschauer ausgewählt der vor freude zu hüpfen beginnt und wieder stoppt wenn die musik zu leise ist.
+	
+	Mit den cheat buttons soll das recording demonstriert werden. Diese synchronisieren die instrumente auf einen Zeitraum in der Mitte der Aufnahme um die auch die synchronität der aufnahmen zu demonstrieren.
