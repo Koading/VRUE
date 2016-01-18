@@ -128,16 +128,27 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 			}
 		}
 
+		nv.RPC ("SetNetworkParentStructure", RPCMode.AllBuffered, avatar.name, gameObjectPult.name );
+
         controlConductor = false;
     }
 
+	[RPC]
+	void SetNetworkParentStructure (string avatarName, string gameObjectPultName)
+	{
+		GameObject.Find (avatarName).transform.parent = GameObject.Find(gameObjectPultName).transform;		 
+	}
+
     public void OnClickResetConductor()
     {
+		if (controlConductor) 
+			return;
+
 		InstrumentBehaviour[] instruments = FindObjectsOfType<InstrumentBehaviour>();
 		NetworkViewID nvId = Network.AllocateViewID();
 		foreach (InstrumentBehaviour instrument in instruments) {
 		
-			nv.RPC("setDirigentMode", RPCMode.AllBuffered, instrument.gameObject.name, false, false);
+			nv.RPC("setDirigentMode", RPCMode.AllBuffered, instrument.gameObject.name, true, false);
 		}
 
 		this.ExchangeParentStructure(avatar, gameObjectPult);
