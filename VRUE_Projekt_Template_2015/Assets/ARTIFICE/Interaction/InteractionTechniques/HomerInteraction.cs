@@ -47,6 +47,7 @@ public class HomerInteraction : ObjectSelectionBase
 	private bool multiple = true;
 	private bool keyDownAlready = false;
 
+	private NetworkView nv;
 
 	/// <summary>
 	/// </summary>
@@ -56,9 +57,13 @@ public class HomerInteraction : ObjectSelectionBase
 		tracker = GameObject.Find ("TrackLeftHand");
         physicalHand = tracker;//GameObject.Find ("PhysicalHand");
 
-        tracker = tracker.transform.FindChild("TrackerObject").gameObject;
+		if (tracker) { 
+			tracker = tracker.transform.FindChild ("TrackerObject").gameObject;
+		}
 
 		lineRenderer = this.gameObject.GetComponent<LineRenderer> ();
+		lineRenderer.enabled = false;
+		nv = this.gameObject.GetComponent<NetworkView> ();
 
 		Debug.Log("Start Homer");
 	}
@@ -210,8 +215,10 @@ public class HomerInteraction : ObjectSelectionBase
 	
 	
 	public void onEnable() {
-		lineRenderer.enabled = true;
-	
+		if (tracker) {
+			Debug.Log("Why?");
+			lineRenderer.enabled = true;
+		}
 	}
 
 	public void onDisabled() {
