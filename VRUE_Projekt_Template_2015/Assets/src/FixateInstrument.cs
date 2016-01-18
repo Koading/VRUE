@@ -33,8 +33,8 @@ public class FixateInstrument : MonoBehaviour {
                 InstrumentBehaviour instrument = obj.GetComponent<InstrumentBehaviour>();
 
                 //instrument.MoveToPool(instrument.viewID, new NetworkMessageInfo());
-                instrument.MoveToPool();
-                
+                //instrument.MoveToPool();
+                instrument.MoveToPoolNetwork();
 
                 //assign instrument to random audience member
                 int numAudience = GameObject.Find("Audience").transform.childCount;

@@ -75,7 +75,8 @@ public class script_RecordingManager : MonoBehaviour
         {
             if (instrument.selected && instrument.audioSource.isPlaying)
             {
-                instrument.OnRecord();
+                //instrument.OnRecord();
+                instrument.OnRecordNetwork();
             }
         }
     }
