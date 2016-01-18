@@ -95,11 +95,13 @@ public class InstrumentBehaviour : MonoBehaviour {
 	protected void playInstrument () {
 		if (audioSource) {
 
-            this.Play(this.viewID, new NetworkMessageInfo());
-			
+            //this.Play();
+            this.PlayNetwork();
+
 			if (audioSource.volume < 0.1f)
 			{
-                this.Stop(this.viewID, new NetworkMessageInfo());
+                //this.Stop();
+                this.StopNetwork();
 			}
 			
 			audioSource.volume += (float)(maxVolumne / 10.0);
@@ -127,13 +129,12 @@ public class InstrumentBehaviour : MonoBehaviour {
     {
 	    if (playState && audioSource) {
 
-            this.Play(this.viewID, new NetworkMessageInfo());
+            //this.Play();
+            this.PlayNetwork();
 
             if (audioSource.volume < 0.1f)
             {
-                //audioSource.Stop();
-                //audioSource.Play(); //????????????? wtf is this doing here?
-                this.Stop(this.viewID, new NetworkMessageInfo());
+                this.Stop();
             }
 
             audioSource.volume = maxVolumne;
@@ -150,9 +151,9 @@ public class InstrumentBehaviour : MonoBehaviour {
 
                 if (!playState)
                 {
-                    //audioSource.Stop();
-                    //instrumentAnimation.enabled = false;
-                    this.Stop(this.viewID, new NetworkMessageInfo());
+
+                    //this.Stop();
+                    this.StopNetwork();
                 }
                 else
                 {
@@ -187,23 +188,32 @@ public class InstrumentBehaviour : MonoBehaviour {
         }
         if(audioSource.volume == 0.0f)
         {
-            Stop(this.viewID, new NetworkMessageInfo());
+            //Stop();
+            this.StopNetwork();
         }
     }
 
     //TODO call this from kinect functions
     public void OnKinectTriggerStart()
     {
-        select(this.viewID, new NetworkMessageInfo());
+        //select();
+
+        NetworkView nv = this.gameObject.GetComponent<NetworkView>();
+
+        nv.RPC("select", RPCMode.AllBuffered);
     }
 
     public void OnKinectTriggerStop()
 	{
-        unselect(this.viewID, new NetworkMessageInfo());
+        //unselect();
+
+        NetworkView nv = this.gameObject.GetComponent<NetworkView>();
+
+        nv.RPC("unselect", RPCMode.AllBuffered);
     }
 
     [RPC]
-    public void select(NetworkViewID viewID, NetworkMessageInfo info)
+    public void select()
     {
         Debug.Log("OnKinect Enter");
         this.selected = true;
@@ -212,7 +222,7 @@ public class InstrumentBehaviour : MonoBehaviour {
     }
 
     [RPC]
-    public void unselect(NetworkViewID viewID, NetworkMessageInfo info)
+    public void unselect()
     {
         Debug.Log("OnKinect Leave");
         alreadyChangedState = false;
@@ -226,11 +236,26 @@ public class InstrumentBehaviour : MonoBehaviour {
         return playState;
     }
 
+    private void PlayNetwork()
+    {
+
+        NetworkView nv = this.gameObject.GetComponent<NetworkView>();
+        nv.RPC("Play", RPCMode.AllBuffered);
+    }
+
+    private void StopNetwork()
+    {
+
+        NetworkView nv = this.gameObject.GetComponent<NetworkView>();
+        nv.RPC("Stop", RPCMode.AllBuffered);
+    }
+
+
     [RPC]
-    private void Play(NetworkViewID viewID, NetworkMessageInfo info)
+    private void Play()
     {
         if(!audioSource.isPlaying)
-        { 
+        {
 
             if(hasRecording)
             audioSource.Play();
@@ -246,7 +271,7 @@ public class InstrumentBehaviour : MonoBehaviour {
     }
 
     [RPC]
-    public void Stop(NetworkViewID viewID, NetworkMessageInfo info)
+    public void Stop()
     {
         if (audioSource.isPlaying)
         {
