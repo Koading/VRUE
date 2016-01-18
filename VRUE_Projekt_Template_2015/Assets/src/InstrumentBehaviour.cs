@@ -330,6 +330,15 @@ public class InstrumentBehaviour : MonoBehaviour {
          */
     }
 
+    public void MoveToPoolNetwork()
+    {
+
+        NetworkView nv = this.gameObject.GetComponent<NetworkView>();
+
+        nv.RPC("MoveToPool", RPCMode.AllBuffered);
+
+    }
+
     [RPC]
     public void MoveToPool()
     {
@@ -338,6 +347,13 @@ public class InstrumentBehaviour : MonoBehaviour {
         GameObject instrumentPool = GameObject.Find("Active Instrument Pool");
 
         this.gameObject.transform.parent = instrumentPool.transform;   
+    }
+
+    public void OnRecordNetwork()
+    {
+        NetworkView nv = this.gameObject.GetComponent<NetworkView>();
+
+        nv.RPC("OnRecord", RPCMode.AllBuffered);
     }
 
     [RPC]
@@ -363,5 +379,4 @@ public class InstrumentBehaviour : MonoBehaviour {
             this.isRecording = true;
         }
     }
-
 }
