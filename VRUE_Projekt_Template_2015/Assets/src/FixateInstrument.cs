@@ -59,10 +59,10 @@ public class FixateInstrument : MonoBehaviour {
                         Debug.Log(visitor);
                         Debug.Log(ab);
 
-                        if (ab && !ab.assignedInstrumentScript)
+                        if (ab && !ab.getAssignedInstrumentScript())
                         {
                             Debug.Log(obj.GetComponent<InstrumentBehaviour>());
-                            ab.assignedInstrumentScript = obj.GetComponent<InstrumentBehaviour>();
+                            ab.setAssignedInstrumentScript(obj.GetComponent<InstrumentBehaviour>());
                             break;
                         }
                     }
