@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class SpawnInstrumentButtonBehaviour : MonoBehaviour {
+public class MoveInstrument : MonoBehaviour {
 
     public GameObject instrument;
 

@@ -15,7 +15,8 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
     public GameObject gameObjectConductor;
     public GameObject gameObjectSpaceMouse;
-    public GameObject gameObjectPult;
+    private GameObject gameObjectPult;
+	private NetworkView nv;
 
 
 
@@ -33,6 +34,9 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 	void Start () {
         controlConductor = false;
         isAvatarInstantiated = false;
+
+		gameObjectPult = GameObject.Find ("Pult");
+		nv = this.gameObject.GetComponent<NetworkView> ();
 	}
 	
     void init()
@@ -63,18 +67,15 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
             avatar.transform.localPosition = new Vector3(0f, 0f, 0f);
             avatar.transform.position = new Vector3(0f, 0f, 0f);
-			GameObject virtualHand = GameObject.Find ("virtualHand");
-			virtualHand.transform.parent = avatar.transform;
+			GameObject virtualHand = GameObject.Find ("VirtualHand(Clone)");
 			virtualHand.transform.localRotation = Quaternion.identity;
-			virtualHand.transform.localPosition = Vector3.zero;
+			ExchangeParentStructure(virtualHand, avatar);
+
 			virtualHand.GetComponent<HomerInteraction>().enabled = true;
             
             isAvatarInstantiated = true;
 
 		}
-
-
-
 
         /*
         spaceMouse.transform.position = new Vector3(0f, 0f, 0f);
@@ -102,29 +103,33 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
 
         //OnClickResetConductor();
+
         avatar.transform.parent = gameObjectPult.transform;
 
         InstrumentBehaviour[] instruments = FindObjectsOfType<InstrumentBehaviour>();
 
         GameObject nearestGameObject = gameObjectPult;
         float nearestDistance = Vector3.Distance(avatar.transform.position, gameObjectPult.transform.position);
+		Debug.Log("Avatar: " + avatar.transform.position);
+		Debug.Log ("Pult: " + gameObjectPult.transform.position);
 
         foreach(InstrumentBehaviour instrument in instruments)
         {
-            float currentDistance = Vector3.Distance(instrument.gameObject.transform.position, nearestGameObject.transform.position);
+            float currentDistance = Vector3.Distance(instrument.gameObject.transform.position, avatar.transform.position);
+			Debug.Log("Found instrument: " + instrument.name + "CurrentDistance: " + currentDistance + " / NearestDistance: " + nearestDistance);
+			Debug.Log("Instrument: " + instrument.gameObject.transform.position);
             if ( currentDistance < nearestDistance)
             {
                 nearestDistance = currentDistance;
                 nearestGameObject = instrument.gameObject;
             }
-        }
+		}
 
-        if (!nearestGameObject.Equals (gameObject)) {
-			nearestGameObject.GetComponent<InstrumentBehaviour> ().dirigentAtInstrument = true;
+        if (!nearestGameObject.Equals (gameObjectPult)) {
+			nv.RPC ("setDirigentMode", RPCMode.AllBuffered, nearestGameObject.name, false, true);
 		} else {
 			foreach(InstrumentBehaviour instrument in instruments) {
-				instrument.dirigentAtPult = true;
-				instrument.dirigentAtInstrument = false;
+				nv.RPC ("setDirigentMode", RPCMode.AllBuffered, instrument.name, true, false);
 			}
 		}
 
@@ -133,16 +138,24 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
     public void OnClickResetConductor()
     {
-        gameObjectPult = GameObject.Find("Pult");
-
 		InstrumentBehaviour[] instruments = FindObjectsOfType<InstrumentBehaviour>();
+		NetworkViewID nvId = Network.AllocateViewID();
 		foreach (InstrumentBehaviour instrument in instruments) {
-			instrument.dirigentAtPult = false;
-			instrument.dirigentAtInstrument = false;
+		
+			nv.RPC("setDirigentMode", RPCMode.AllBuffered, instrument.gameObject.name, false, false);
 		}
 
 		this.ExchangeParentStructure(avatar, gameObjectPult);
     }
+
+	[RPC]
+	private void setDirigentMode(string instrumentName, bool dirigentAtPult, bool dirigentAtInstrument) {
+		InstrumentBehaviour instrument = GameObject.Find (instrumentName).GetComponent<InstrumentBehaviour>();
+		if (instrument) {
+			instrument.dirigentAtPult = dirigentAtPult;
+			instrument.dirigentAtInstrument = dirigentAtInstrument;
+		}
+	}
 
     [RPC]
     public void ExchangeParentStructure(GameObject newChild, GameObject newParent)
