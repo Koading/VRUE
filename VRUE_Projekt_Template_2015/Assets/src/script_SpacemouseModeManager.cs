@@ -67,7 +67,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
             avatar.transform.position = new Vector3(0f, 0f, 0f);
 			GameObject virtualHand = GameObject.Find ("VirtualHand(Clone)");
 			virtualHand.transform.localRotation = Quaternion.identity;
-			ExchangeParentStructure(virtualHand, avatar);
+			ExchangeParentStructure(virtualHand, GameObject.Find("TrackingCamera"));
             
             isAvatarInstantiated = true;
 
