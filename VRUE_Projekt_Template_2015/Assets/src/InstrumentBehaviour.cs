@@ -239,6 +239,7 @@ public class InstrumentBehaviour : MonoBehaviour {
         }
     }
 
+    [RPC]
     public void StartHighlight()
     {
         if (this.highlighted)
@@ -264,10 +265,10 @@ public class InstrumentBehaviour : MonoBehaviour {
                 color.r += this.colorOffset;
                 go.renderer.materials[y].color = color;
             }
-        }
-         
+        } 
     }
 
+    [RPC]
     public void StopHighlight()
     {
         if (!this.highlighted)
