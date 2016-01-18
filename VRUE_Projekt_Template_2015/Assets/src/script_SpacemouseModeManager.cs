@@ -64,7 +64,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
             avatar.transform.localPosition = new Vector3(0f, 0f, 0f);
             avatar.transform.position = new Vector3(0f, 0f, 0f);
 			GameObject virtualHand = GameObject.Find ("virtualHand");
-			virtualHand.transform.parent = virtualHand.transform;
+			virtualHand.transform.parent = avatar.transform;
 			virtualHand.transform.localRotation = Quaternion.identity;
 			virtualHand.transform.localPosition = Vector3.zero;
 			virtualHand.GetComponent<HomerInteraction>().enabled = true;
@@ -104,7 +104,29 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         //OnClickResetConductor();
         avatar.transform.parent = gameObjectPult.transform;
 
+        InstrumentBehaviour[] instruments = FindObjectsOfType<InstrumentBehaviour>();
 
+        GameObject nearestGameObject = gameObjectPult;
+        float nearestDistance = Vector3.Distance(avatar.transform.position, gameObjectPult.transform.position);
+
+        foreach(InstrumentBehaviour instrument in instruments)
+        {
+            float currentDistance = Vector3.Distance(instrument.gameObject.transform.position, nearestGameObject.transform.position);
+            if ( currentDistance < nearestDistance)
+            {
+                nearestDistance = currentDistance;
+                nearestGameObject = instrument.gameObject;
+            }
+        }
+
+        if (!nearestGameObject.Equals (gameObject)) {
+			nearestGameObject.GetComponent<InstrumentBehaviour> ().dirigentAtInstrument = true;
+		} else {
+			foreach(InstrumentBehaviour instrument in instruments) {
+				instrument.dirigentAtPult = true;
+				instrument.dirigentAtInstrument = false;
+			}
+		}
 
         controlConductor = false;
     }
@@ -113,7 +135,13 @@ public class script_SpacemouseModeManager : MonoBehaviour {
     {
         gameObjectPult = GameObject.Find("Pult");
 
-        this.ExchangeParentStructure(avatar, gameObjectPult);
+		InstrumentBehaviour[] instruments = FindObjectsOfType<InstrumentBehaviour>();
+		foreach (InstrumentBehaviour instrument in instruments) {
+			instrument.dirigentAtPult = false;
+			instrument.dirigentAtInstrument = false;
+		}
+
+		this.ExchangeParentStructure(avatar, gameObjectPult);
     }
 
     [RPC]

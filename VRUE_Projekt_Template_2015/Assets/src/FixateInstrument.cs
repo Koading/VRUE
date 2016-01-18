@@ -6,7 +6,7 @@ public class FixateInstrument : MonoBehaviour {
 
     public GameObject tracker;
     Button button;
-    public GameObject instrumentPool;
+    private GameObject instrumentPool;
 
     // Use this for initialization
 	void Start () {
