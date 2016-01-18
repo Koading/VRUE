@@ -186,7 +186,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 				}
             }
         }
-        if(audioSource.volume == 0.0f)
+        if(audioSource.volume == 0.0f && audioSource.isPlaying)
         {
             //Stop();
             this.StopNetwork();
