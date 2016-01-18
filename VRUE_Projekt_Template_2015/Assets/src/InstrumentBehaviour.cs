@@ -18,7 +18,8 @@ public class InstrumentBehaviour : MonoBehaviour {
 	public float maxVolumne;
 
     public bool controlVolumeSelected = false;
-	public float incrementalDecline = 0.1f;
+	public float incrementalDecline = 0.05f;
+	public float incrementalIncrease = 0.2f;
 
     GameObject spaceMouse;
 
@@ -80,7 +81,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 				CommandInstrument ();
 			}
 			if (Input.GetKeyDown (KeyCode.E)) {
-				Andante ();
+				playInstrument ();
 			}
 		}
 		
@@ -123,21 +124,6 @@ public class InstrumentBehaviour : MonoBehaviour {
                 deltaSpaceY = spaceMouse.transform.localEulerAngles.y - 360f;
 
             maxVolumne = Mathf.Max(Mathf.Min(maxVolumne + maxVolumne * (-deltaSpaceY / 360f) * Time.deltaTime, 1.0f), 0.2f);
-        }
-    }
-    private void Andante()
-    {
-	    if (playState && audioSource) {
-
-            //this.Play();
-            this.PlayNetwork();
-
-            if (audioSource.volume < 0.1f)
-            {
-                this.Stop();
-            }
-
-            audioSource.volume = maxVolumne;
         }
     }
 
@@ -254,19 +240,20 @@ public class InstrumentBehaviour : MonoBehaviour {
     [RPC]
     private void Play()
     {
-        if(!audioSource.isPlaying)
-        {
+        if (!audioSource.isPlaying) {
 
-            audioSource.Play();
-            audioSource.loop = true;
-            instrumentAnimation.enabled = true;
+			audioSource.Play ();
+			audioSource.loop = true;
+			instrumentAnimation.enabled = true;
+			this.audioSource.volume = Mathf.Min (this.maxVolumne, this.audioSource.volume + incrementalIncrease);
 
-            if(this.hasRecording)
-            {
-                audioSource.time = this.rec.playStart;
-                audioSource.volume = this.rec.volume;
-            }
-        }
+			if (this.hasRecording) {
+				audioSource.time = this.rec.playStart;
+				audioSource.volume = this.rec.volume;
+			}
+		} else {
+			this.audioSource.volume = Mathf.Min (this.maxVolumne, this.audioSource.volume + incrementalIncrease);
+		}
     }
 
     [RPC]

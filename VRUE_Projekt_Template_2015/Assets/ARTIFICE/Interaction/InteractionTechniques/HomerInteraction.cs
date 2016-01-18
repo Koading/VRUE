@@ -94,14 +94,14 @@ public class HomerInteraction : ObjectSelectionBase
 
 					// show virtual hand -> physical hand is autmatically rendert due to tracking state
 					tracker.transform.parent.GetComponent<TrackBase>().setVisability(gameObject, true);
-					this.transform.rotation = tracker.transform.rotation;
-					this.transform.position = tracker.transform.position;					
+					this.transform.localRotation = tracker.transform.rotation;
+					this.transform.localPosition = tracker.transform.position;					
 					
 
 					if(lineRenderer && !selected) {
 						//Update transform of the selector object (virtual hand)
-						lineRenderer.SetPosition (0, physicalHand.transform.position);
-						lineRenderer.SetPosition (1, (physicalHand.transform.position - torso.transform.position ).normalized * 99999 + physicalHand.transform.position);
+						lineRenderer.SetPosition (0, this.transform.position);
+						lineRenderer.SetPosition (1, (this.transform.position - torso.transform.position ).normalized * 99999 + this.transform.position);
 						ArrayList removableCollidees = new ArrayList();							
 
 						foreach(GameObject collidee in collidees.Values) {
@@ -123,9 +123,7 @@ public class HomerInteraction : ObjectSelectionBase
 									if(removableCollidees.Contains(collidee)) {
 										removableCollidees.Remove(collidee);
 									}
-									
-									if (isOwnerCallback() && 
-                                        hasObjectController(collidee) ) {
+
 																			
 										if(!collidees.Contains(collidee.GetInstanceID())) {
 											collidees.Add(collidee.GetInstanceID(), collidee);
@@ -135,7 +133,7 @@ public class HomerInteraction : ObjectSelectionBase
 												behaviour.OnKinectTriggerStart();
 											}
 										}
-									}
+
 								}
 								Vector3 positionOfColliddeeObject = new Vector3(0,0,0);
 								
@@ -158,15 +156,14 @@ public class HomerInteraction : ObjectSelectionBase
 									removableCollidees.Remove(collidee);
 								}
 								
-								if( isOwnerCallback() &&
-                                    hasObjectController(collidee) ) {
+
 									if(!collidees.Contains(collidee.GetInstanceID())) {
 										collidees.Add(collidee.GetInstanceID(), collidee);
 									
 										Debug.Log(collidee.GetInstanceID());
 									
 									}
-								}
+
 
 								dh = (tracker.transform.position - torso.transform.position).magnitude;
 								d0 = (collidee.transform.position - torso.transform.position).magnitude;
@@ -175,14 +172,13 @@ public class HomerInteraction : ObjectSelectionBase
 						}
 
 						foreach(GameObject collidee in removableCollidees) {
-							if (isOwnerCallback()) { 
 								collidees.Remove(collidee.GetInstanceID());
 
 								InstrumentBehaviour behaviour = collidee.GetComponent<InstrumentBehaviour>();
 								if(behaviour) {
 									behaviour.OnKinectTriggerStop();
 								}
-							}
+
 						}
 					}
 					

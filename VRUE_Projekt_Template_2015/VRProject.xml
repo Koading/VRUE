@@ -48,17 +48,17 @@
 			<descriptor>20</descriptor>
 			<descriptor>cm/sec</descriptor>
 		</input>
+		<input type="4">
+			<descriptor>0,1</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
 		<input type="3">
 			<descriptor>right wrist</descriptor>
 			<descriptor>to the right</descriptor>
 			<descriptor>at least</descriptor>
 			<descriptor>20</descriptor>
 			<descriptor>cm/sec</descriptor>
-		</input>
-		<input type="4">
-			<descriptor>0,1</descriptor>
-			<descriptor>1</descriptor>
-			<descriptor>starts</descriptor>
 		</input>
 		<input type="4">
 			<descriptor>0,1</descriptor>
@@ -164,6 +164,14 @@
 			<descriptor>1</descriptor>
 			<descriptor>starts</descriptor>
 		</input>
+		<input type="1">
+			<descriptor>left hand</descriptor>
+			<descriptor>to the left of</descriptor>
+			<descriptor>right hand</descriptor>
+			<descriptor>at least</descriptor>
+			<descriptor>40</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
 		<output type="0">
 			<descriptor>press</descriptor>
 			<descriptor>g</descriptor>
@@ -224,6 +232,19 @@
 	</gesture>
 	<gesture name="playDrums" timeout="0.3">
 		<input type="1">
+			<descriptor>left hand</descriptor>
+			<descriptor>to the left of</descriptor>
+			<descriptor>right hand</descriptor>
+			<descriptor>at most</descriptor>
+			<descriptor>15</descriptor>
+			<descriptor>centimeters</descriptor>
+		</input>
+		<input type="4">
+			<descriptor>0</descriptor>
+			<descriptor>1</descriptor>
+			<descriptor>starts</descriptor>
+		</input>
+		<input type="1">
 			<descriptor>right hand</descriptor>
 			<descriptor>to the right of</descriptor>
 			<descriptor>head</descriptor>
@@ -232,8 +253,8 @@
 			<descriptor>centimeters</descriptor>
 		</input>
 		<input type="4">
-			<descriptor>0,1</descriptor>
-			<descriptor>0,5</descriptor>
+			<descriptor>0</descriptor>
+			<descriptor>1</descriptor>
 			<descriptor>starts</descriptor>
 		</input>
 		<input type="3">
@@ -244,8 +265,8 @@
 			<descriptor>cm/sec</descriptor>
 		</input>
 		<input type="4">
-			<descriptor>0,1</descriptor>
-			<descriptor>0,5</descriptor>
+			<descriptor>0</descriptor>
+			<descriptor>1</descriptor>
 			<descriptor>starts</descriptor>
 		</input>
 		<input type="3">
