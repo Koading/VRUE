@@ -38,6 +38,10 @@ public class InstrumentBehaviour : MonoBehaviour {
 
     private bool highlighted;
 
+    private Recording rec;
+    private bool isRecording = true;
+    private bool hasRecording = false;
+
 	void OnGui()
 	{
 		//Vector2 pos = new Vector2(20,20);
@@ -62,6 +66,8 @@ public class InstrumentBehaviour : MonoBehaviour {
         //GameObject parentSpace = GameObject.Find("Active Instrument Pool");
         //this.transform.parent = parentSpace.transform;
         highlighted = false;
+
+        
 	}
 	
 	// Update is called once per frame
@@ -78,9 +84,12 @@ public class InstrumentBehaviour : MonoBehaviour {
 			}
 		}
 		
-
         ApplyIncrementalDecline();
 
+        if(this.hasRecording && audioSource.isPlaying)
+        {
+            rec.Update();
+        }
 	}
 
 	protected void playInstrument () {
@@ -96,7 +105,6 @@ public class InstrumentBehaviour : MonoBehaviour {
 			audioSource.volume += (float)(maxVolumne / 10.0);
 		}
 	}
-
 
     /**
      * 
@@ -168,7 +176,7 @@ public class InstrumentBehaviour : MonoBehaviour {
     {
         if (audioSource)
         {
-            if (audioSource.volume > 0.0f)
+            if (audioSource.volume > 0.0f && audioSource.isPlaying)
             {
 				if(dirigentAtInstrument) {
 					audioSource.volume -= Mathf.Max(0.0f, incrementalDecline * Time.deltaTime * 2);					
@@ -223,9 +231,17 @@ public class InstrumentBehaviour : MonoBehaviour {
     {
         if(!audioSource.isPlaying)
         { 
+
+            if(hasRecording)
             audioSource.Play();
             audioSource.loop = false;
             instrumentAnimation.enabled = true;
+
+            if(this.hasRecording)
+            {
+                audioSource.time = this.rec.playStart;
+                audioSource.volume = this.rec.volume;
+            }
         }
     }
 
@@ -323,4 +339,29 @@ public class InstrumentBehaviour : MonoBehaviour {
 
         this.gameObject.transform.parent = instrumentPool.transform;   
     }
+
+    [RPC]
+    public void OnRecord()
+    {
+
+        if (!this.audioSource.isPlaying)
+            return;
+
+        if (this.isRecording)
+        {
+            this.rec.playEnd = this.audioSource.time;
+            this.isRecording = false;
+            this.hasRecording = true;
+        }
+
+        else { 
+        
+            this.rec = new Recording(this);
+            this.rec.playStart = this.audioSource.time;
+            this.rec.volume = this.audioSource.volume;
+
+            this.isRecording = true;
+        }
+    }
+
 }

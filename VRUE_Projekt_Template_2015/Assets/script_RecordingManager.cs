@@ -67,4 +67,16 @@ public class script_RecordingManager : MonoBehaviour
         this.playAll = false;
         this.ClearRecordings();
     }
+
+    public void OnClickRecordSelectedInstrument()
+    {
+        InstrumentBehaviour[] instruments = GameObject.FindObjectsOfType<InstrumentBehaviour>();
+        foreach (InstrumentBehaviour instrument in instruments)
+        {
+            if (instrument.selected && instrument.audioSource.isPlaying)
+            {
+                instrument.OnRecord();
+            }
+        }
+    }
 }
