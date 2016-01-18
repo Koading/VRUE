@@ -292,10 +292,9 @@ public class InstrumentBehaviour : MonoBehaviour {
         {
             Debug.Log(this.gameObject.transform.GetChild(i));
             Transform go = this.gameObject.transform.GetChild(i);
-            Debug.Log(go.renderer.materials.Length);
 
             if (!go.renderer)
-                break;
+                continue;
 
 
             int colorCount = go.renderer.materials.Length;
@@ -320,10 +319,9 @@ public class InstrumentBehaviour : MonoBehaviour {
         {
             Debug.Log(this.gameObject.transform.GetChild(i));
             Transform go = this.gameObject.transform.GetChild(i);
-            Debug.Log(go.renderer.materials.Length);
 
             if (!go.renderer)
-                break;
+                continue;
 
             int colorCount = go.renderer.materials.Length;
 

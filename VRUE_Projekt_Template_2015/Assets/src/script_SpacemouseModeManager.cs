@@ -152,18 +152,26 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 		}
 	}
 
-    [RPC]
+	[RPC]
+	public void ExchangeNetworkParentStructure(string newChildName, string newParentName) {
+		Debug.Log("Exchanging " + newChildName + " with parent: " + newParentName);
+
+		GameObject newChild = GameObject.Find (newChildName);
+		GameObject newParent = GameObject.Find (newParentName);
+
+		if (newChild && newParent) {
+			newChild.transform.position = new Vector3 (0f, 0f, 0f);
+			newChild.transform.localPosition = new Vector3 (0f, 0f, 0f);
+		
+			newChild.transform.parent = newParent.transform;
+		}
+	}
+
+
     public void ExchangeParentStructure(GameObject newChild, GameObject newParent)
     {
+		nv.RPC ("ExchangeNetworkParentStructure", RPCMode.AllBuffered, newChild.name, newParent.name);
 
-        Debug.Log("Exchanging " + newChild.name + " with parent: " + newParent.name);
-        newChild.transform.position = new Vector3(0f, 0f, 0f);
-        newChild.transform.localPosition = new Vector3(0f, 0f, 0f);
-        //object1.transform.position = new Vector3(0f, 0f, 0f);
 
-        //spaceMouse.transform.position = new Vector3(0f, 0f, 0f);
-        //newParent.transform.localPosition = new Vector3(0f, 0f, 0f);
-
-        newChild.transform.parent = newParent.transform;
     }
 }

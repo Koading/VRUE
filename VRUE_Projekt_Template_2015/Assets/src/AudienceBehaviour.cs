@@ -9,13 +9,12 @@ public class AudienceBehaviour : MonoBehaviour {
     
     //public GameObject assignedInstrument = null;
 
-    public InstrumentBehaviour assignedInstrumentScript; //{get;set;}
+    private InstrumentBehaviour assignedInstrumentScript = null; //{get;set;}
     
     
 	Animator rootAnimator;
 
     void Start () {
-        assignedInstrumentScript = null;
 		rootAnimator = this.gameObject.transform.parent.gameObject.GetComponent<Animator> ();
 	}
 	
@@ -40,6 +39,14 @@ public class AudienceBehaviour : MonoBehaviour {
                 }
             }
         }
+	}
+
+	public void setAssignedInstrumentScript(InstrumentBehaviour instrumentBehaviour) {
+		assignedInstrumentScript = instrumentBehaviour;
+	}
+
+	public InstrumentBehaviour getAssignedInstrumentScript() {
+		return assignedInstrumentScript;
 	}
 
     [RPC]
