@@ -13,7 +13,6 @@ public class script_SpacemouseModeManager : MonoBehaviour {
     public Button buttonFixConductor;
     public Button buttonResetConductor;
 
-    public GameObject gameObjectConductor;
     public GameObject gameObjectSpaceMouse;
     private GameObject gameObjectPult;
 	private NetworkView nv;
@@ -21,7 +20,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
 
     GameObject spaceMouse;
-    public GameObject tracker;
+    private GameObject tracker;
 
     GameObject avatar;
     public Transform prefab;
@@ -55,7 +54,6 @@ public class script_SpacemouseModeManager : MonoBehaviour {
         if (!isAvatarInstantiated)
         {
             //change spawntest please
-            this.gameObjectConductor = GameObject.Find("Pult");
             this.gameObjectSpaceMouse = GameObject.Find("Spacemouse");
 
             tracker = GameObject.Find("TrackingCamera");
@@ -70,8 +68,6 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 			GameObject virtualHand = GameObject.Find ("VirtualHand(Clone)");
 			virtualHand.transform.localRotation = Quaternion.identity;
 			ExchangeParentStructure(virtualHand, avatar);
-
-			virtualHand.GetComponent<HomerInteraction>().enabled = true;
             
             isAvatarInstantiated = true;
 
@@ -89,7 +85,6 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 
         tracker.transform.position = avatar.transform.position;
 
-        //gameObjectConductor.transform.parent = tracker.transform;
 
         ExchangeParentStructure(avatar, tracker);
 

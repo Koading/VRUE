@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class FixateInstrument : MonoBehaviour {
 
-    public GameObject tracker;
+    private GameObject tracker;
     Button button;
     private GameObject instrumentPool;
 
