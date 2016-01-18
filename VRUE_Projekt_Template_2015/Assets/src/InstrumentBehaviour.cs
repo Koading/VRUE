@@ -257,7 +257,6 @@ public class InstrumentBehaviour : MonoBehaviour {
         if(!audioSource.isPlaying)
         {
 
-            if(hasRecording)
             audioSource.Play();
             audioSource.loop = false;
             instrumentAnimation.enabled = true;
