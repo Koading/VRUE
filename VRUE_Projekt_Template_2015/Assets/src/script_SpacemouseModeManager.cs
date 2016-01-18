@@ -60,11 +60,14 @@ public class script_SpacemouseModeManager : MonoBehaviour {
             spaceMouse = tracker.transform.Find("Spacemouse").gameObject;
             tracker = spaceMouse.transform.Find("TrackerObject").gameObject;
 
-			avatar = GameObject.Find("SportyGirl(Clone)");
+            avatar = ((Transform)Network.Instantiate(prefab, new Vector3(0f, 0f, 0f), Quaternion.identity, 0)).gameObject;
             //avatar.transform.Find("VirtualHand").GetComponent<MeshRenderer>().enabled = true;
 
             avatar.transform.localPosition = new Vector3(0f, 0f, 0f);
             avatar.transform.position = new Vector3(0f, 0f, 0f);
+			GameObject virtualHand = GameObject.Find ("VirtualHand(Clone)");
+			virtualHand.transform.localRotation = Quaternion.identity;
+			ExchangeParentStructure(virtualHand, avatar);
             
             isAvatarInstantiated = true;
 
@@ -147,6 +150,7 @@ public class script_SpacemouseModeManager : MonoBehaviour {
 			return;
 
 		InstrumentBehaviour[] instruments = FindObjectsOfType<InstrumentBehaviour>();
+		NetworkViewID nvId = Network.AllocateViewID();
 		foreach (InstrumentBehaviour instrument in instruments) {
 		
 			nv.RPC("setDirigentMode", RPCMode.AllBuffered, instrument.gameObject.name, true, false);
