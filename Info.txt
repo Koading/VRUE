@@ -1,0 +1,20 @@
+Beschreibung:
+
+	Der Kinekt user ist der Server, der Spacemouse user ist der client
+	Dem Client stehen nach verbinden mit dem Server verschiedene Buttons zur verfügung um seine aktionen durchzuführen
+		Den Avatar Spawnen/bedienen
+		Instrumente spawnen
+		Abspielende Instrumente aufnehmen
+		Cheats (zur demonstration eines recordings, da dies etwas tricky ist)
+		
+	
+	Zur verfügung stehen 5 Instrumente: Drums, Violine, Trompete, Xylophon und Gitarre. Zusätzlich Lautsprecher, die haben aber außer zum spawnen keine weitere verwendung
+	Beim spawnen der Instrumente wird ein Spotlight gespawned, dass die Instrumente verfolgt. Die Farbe der Spotlights wird zufällig gewählt, daher kommt es vor, dass die spotlights kaum sichtbar sind
+	Jedes Instrument hat eine Anzeige für die Lautstärke
+	
+	
+	Der Kinekt wird per Buttons gespawned und gesteuert. Um den Avatar zu spawnen, muss der Spacemoususer erst "Control Conductor" drücken. 
+	Nachdem der Spacemouseuser control conductor gedrückt hat, kann er diesen per Spacemouse bewegen und irgendwo in die Szene setzen
+	Default mäßig ist dies der Instrumentenmodus. Um den Dirigenten ins pult und in den Pultmodus zu setzen muss der Spacemouseuser reset conductor drücken.
+	
+	
