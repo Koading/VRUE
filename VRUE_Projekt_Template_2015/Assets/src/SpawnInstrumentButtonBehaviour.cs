@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SpawnInstrumentButtonBehaviour : MonoBehaviour {
 
-    public GameObject instrument;
+    protected GameObject instrument;
 
     protected GameObject categoryParent;
     protected Transform initialTransform;
@@ -19,6 +19,7 @@ public class SpawnInstrumentButtonBehaviour : MonoBehaviour {
         //@lva: objects do not seem to have a fixed naming convention :P
         //either use camelcase everywhere or don't
         Debug.Log(tracker);
+
         if(tracker && instrument)
         {
             Debug.Log("Button pressed");

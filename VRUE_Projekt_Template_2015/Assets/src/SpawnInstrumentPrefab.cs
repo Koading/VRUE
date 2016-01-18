@@ -10,13 +10,9 @@ public class SpawnInstrumentPrefab : SpawnInstrumentButtonBehaviour
     //create a prefab from a model, drag element from prefab folder to public field in gameinspector
     public Object prefab;
 
-    GameObject instantiatedPrefab;
-
-    public Transform playerPrefab;
-
-    Button button_;
-
-    script_LightPoolManager lightPoolManager;
+    private GameObject instantiatedPrefab;
+	private Button button_;
+    private script_LightPoolManager lightPoolManager;
 
 	// Use this for initialization
 	void Start () {
