@@ -14,7 +14,7 @@ public class script_LightPoolManager : MonoBehaviour {
         {
 
             GameObject light = (GameObject)Network.Instantiate(prefab, new Vector3(0, 0, 0), new Quaternion(), 0);
-            light.GetComponent<InstrumentSpotlight>().instrument = instrument;
+            light.GetComponent<InstrumentSpotlight>().setInstrument(instrument);
 
         }
     }

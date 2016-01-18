@@ -5,7 +5,7 @@ using System.Collections;
 
     public class InstrumentSpotlight : MonoBehaviour
     {
-        public GameObject instrument;
+        private GameObject instrument;
          Light spotlightComponent;
 
         //NetworkView networkView;
@@ -25,8 +25,14 @@ using System.Collections;
             transform.parent = GameObject.Find("LightPool").transform;
             transform.localPosition = new Vector3(0, 0, 0);
 
-            transform.LookAt(instrument.transform.position);
         }
+
+		public void setInstrument(GameObject instrument) {
+			this.instrument = instrument;
+		
+			transform.LookAt(instrument.transform.position);
+
+		}
 
         public void Update()
         {
