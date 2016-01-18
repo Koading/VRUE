@@ -39,6 +39,8 @@ public class InstrumentBehaviour : MonoBehaviour {
 
     private bool highlighted;
 
+	bool colorHighlighted = false;
+
     private Recording rec;
     private bool isRecording = true;
     private bool hasRecording = false;
@@ -85,6 +87,19 @@ public class InstrumentBehaviour : MonoBehaviour {
 				playInstrument ();
 			}
 		}
+
+		if (selected) {
+			if (!controlVolumeSelected && Input.GetKeyDown (KeyCode.R)) {
+				controlVolumeSelected = true;
+			}
+		}
+
+		if (controlVolumeSelected) {
+			if(Input.GetKeyDown(KeyCode.R)) {
+				controlVolumeSelected = false;
+			}
+		}
+
 		
         ApplyIncrementalDecline();
 
@@ -298,6 +313,36 @@ public class InstrumentBehaviour : MonoBehaviour {
         this.highlighted = true;
     }
 
+	[RPC]
+	public void StartHighlightColor()
+	{
+		if (this.colorHighlighted)
+			return;
+		
+		int childCount = this.gameObject.transform.childCount;
+		
+		for (int i = 0; i < childCount; i++)
+		{
+			
+			Transform go = this.gameObject.transform.GetChild(i);
+			
+			if (!go.renderer)
+				continue;
+			
+			
+			int colorCount = go.renderer.materials.Length;
+			
+			for (int y = 0; y < colorCount; y++)
+			{
+				Color color = go.renderer.materials[y].color;
+				color.r += this.colorOffset *2;
+				go.renderer.materials[y].color = color;
+			}
+		}
+		
+		this.highlighted = true;
+	}
+
     [RPC]
     public void StopHighlight()
     {
@@ -325,6 +370,34 @@ public class InstrumentBehaviour : MonoBehaviour {
 
         this.highlighted = false;
     }
+
+	[RPC]
+	public void StopHighlightColor()
+	{
+		if (!this.colorHighlighted)
+			return;
+		int childCount = this.gameObject.transform.childCount;
+		
+		for (int i = 0; i < childCount; i++)
+		{
+			Debug.Log(this.gameObject.transform.GetChild(i));
+			Transform go = this.gameObject.transform.GetChild(i);
+			
+			if (!go.renderer)
+				continue;
+			
+			int colorCount = go.renderer.materials.Length;
+			
+			for (int y = 0; y < colorCount; y++)
+			{
+				Color color = go.renderer.materials[y].color;
+				color.r -= this.colorOffset * 2;
+				go.renderer.materials[y].color = color;
+			}
+		}
+		
+		this.highlighted = false;
+	}
 
     public void MoveToPoolNetwork()
     {
