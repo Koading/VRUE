@@ -305,7 +305,9 @@ public class InstrumentBehaviour : MonoBehaviour {
                 color.r += this.colorOffset;
                 go.renderer.materials[y].color = color;
             }
-        } 
+        }
+
+        this.highlighted = true;
     }
 
     [RPC]
@@ -333,23 +335,7 @@ public class InstrumentBehaviour : MonoBehaviour {
             }
         }
 
-        /*
-        int childCount = this.gameObject.transform.childCount;
-
-        for (int i = 0; i < childCount; i++)
-        {
-            Debug.Log(this.gameObject.transform.GetChild(i));
-            Transform go = this.gameObject.transform.GetChild(i);
-            Debug.Log(go.renderer.materials.Length);
-
-
-            
-            if(go.renderer.materials[go.renderer.materials.Length - 1].name == "Outline")
-            {
-
-            }
-        }
-         */
+        this.highlighted = false;
     }
 
     public void MoveToPoolNetwork()
