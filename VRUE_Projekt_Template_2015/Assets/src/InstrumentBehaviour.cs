@@ -73,6 +73,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void Update () {
+		Debug.Log ("E Pressed: " + Input.GetKeyDown (KeyCode.E));
 
         ControlMaxVolume();
 
@@ -277,7 +278,7 @@ public class InstrumentBehaviour : MonoBehaviour {
 
         for (int i = 0; i < childCount; i++)
         {
-            Debug.Log(this.gameObject.transform.GetChild(i));
+
             Transform go = this.gameObject.transform.GetChild(i);
 
             if (!go.renderer)
